@@ -11,7 +11,7 @@ class CvApiService {
   CvApiService({
     ApiClient? apiClient,
     Future<void> Function(Duration)? pollingDelay,
-    this.pollingTimeout = const Duration(minutes: 3),
+    this.pollingTimeout = const Duration(seconds: 60),
   })  : _pollingDelay = pollingDelay ?? Future<void>.delayed,
         _apiClient = apiClient ??
             ApiClient(tokenProvider: const AuthTokenStore().readToken);
@@ -247,14 +247,16 @@ class CvApiService {
   }
 
   String pdfUrlForTemplate(GeneratedCv cv, String? templateSlug) {
-    final templateBaseUrl = cv.templatePdfUrl ?? '';
-    if (templateSlug == null ||
-        templateSlug.isEmpty ||
-        templateBaseUrl.isEmpty) {
-      return templateBaseUrl.isNotEmpty ? templateBaseUrl : cv.pdfUrl ?? '';
+    final baseUrl = (cv.templatePdfUrl?.isNotEmpty ?? false)
+        ? cv.templatePdfUrl!
+        : (cv.pdfUrl ?? '');
+    if (baseUrl.isEmpty) return '';
+
+    final uri = Uri.parse(baseUrl);
+    if (templateSlug == null || templateSlug.isEmpty) {
+      return uri.toString();
     }
 
-    final uri = Uri.parse(templateBaseUrl);
     return uri.replace(queryParameters: {
       ...uri.queryParameters,
       'template': templateSlug,

@@ -137,6 +137,18 @@ class _LoginScreenState extends State<LoginScreen> {
     AppSnackBar.error(context, message);
   }
 
+  void _goToRegister() {
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const RegisterScreen()),
+      );
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const RegisterScreen()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final english = AppLocale.isEnglish(context);
@@ -166,10 +178,20 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Spacer(),
-                      LanguageToggle(),
+                      if (Navigator.of(context).canPop())
+                        IconButton(
+                          onPressed: () => Navigator.maybePop(context),
+                          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+                          icon: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: context.sirati.textPrimary,
+                            size: 18,
+                          ),
+                        ),
+                      const Spacer(),
+                      const LanguageToggle(),
                     ],
                   ),
                   SizedBox(height: compactHeader ? 4 : 8),
@@ -356,10 +378,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: context.sirati.textSecondary),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (_) => const RegisterScreen()),
-                            ),
+                            onPressed: _goToRegister,
                             child: Text(
                                 english ? 'Create account' : 'أنشئ حساباً'),
                           ),

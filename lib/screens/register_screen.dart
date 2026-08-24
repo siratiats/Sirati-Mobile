@@ -22,6 +22,8 @@ import '../widgets/password_strength_meter.dart';
 import '../widgets/submit_button.dart';
 import 'email_verification_screen.dart';
 import 'home_screen.dart';
+import 'login_screen.dart';
+import 'splash_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -163,6 +165,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
     replaceRoot(context, const HomeScreen());
   }
 
+  void _handleBack() {
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    } else {
+      replaceRoot(context, const SplashScreen());
+    }
+  }
+
+  void _goToLogin() {
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final en = AppLocale.isEnglish(context);
@@ -181,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: () => Navigator.maybePop(context),
+                      onPressed: _handleBack,
                       tooltip:
                           MaterialLocalizations.of(context).backButtonTooltip,
                       icon: Icon(
@@ -502,7 +524,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
                           child: GestureDetector(
-                            onTap: () => Navigator.pop(context),
+                            onTap: _goToLogin,
                             child: Text(
                               en ? 'Sign In' : 'تسجيل الدخول',
                               style: TextStyle(

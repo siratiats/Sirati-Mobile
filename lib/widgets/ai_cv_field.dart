@@ -110,7 +110,7 @@ class AiCvField extends StatelessWidget {
             final enabled = value.text.trim().length >= 10 && !isLoading;
             return SubmitButton(
               key: Key('enhance_$field'),
-              label: english ? 'Enhance with AI' : 'حسّن بالذكاء الاصطناعي',
+              label: english ? 'Enhance' : 'تحسين',
               loadingLabel: english ? 'Enhancing...' : 'جارٍ التحسين...',
               isLoading: isLoading,
               outlined: true,

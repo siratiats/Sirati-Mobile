@@ -26,30 +26,43 @@ class _GeneratedCvScreenState extends State<GeneratedCvScreen> {
   String? _cachedMarkdown;
   bool? _cachedRtl;
   List<Widget>? _cachedMarkdownSections;
+  bool _isDownloading = false;
 
   Future<void> _downloadPdf(BuildContext context) async {
+    if (_isDownloading) return;
     final english = AppLocale.isEnglish(context);
     final service = CvApiService();
-    final selection = (widget.generatedCv.templatePdfUrl?.isNotEmpty ?? false)
-        ? await _chooseTemplate(context, service, english)
-        : const _TemplateSelection.useDefault();
-    if (!context.mounted || !selection.shouldDownload) return;
 
-    final pdfUrl =
-        service.pdfUrlForTemplate(widget.generatedCv, selection.template?.slug);
-    if (pdfUrl.isEmpty) {
-      _showMessage(
-          context,
-          english
-              ? 'PDF link is not available yet.'
-              : 'رابط PDF غير متاح حالياً.');
-      return;
-    }
+    setState(() => _isDownloading = true);
+    try {
+      final selection = (widget.generatedCv.templatePdfUrl?.isNotEmpty ?? false)
+          ? await _chooseTemplate(context, service, english)
+          : const _TemplateSelection.useDefault();
+      if (!context.mounted || !selection.shouldDownload) return;
 
-    final launched = await launchSafeExternalUrl(pdfUrl);
-    if (!launched && context.mounted) {
-      _showMessage(context,
-          english ? 'Could not open the PDF link.' : 'تعذر فتح رابط PDF.');
+      final pdfUrl =
+          service.pdfUrlForTemplate(widget.generatedCv, selection.template?.slug);
+      if (pdfUrl.isEmpty) {
+        _showMessage(
+            context,
+            english
+                ? 'PDF link is not available yet.'
+                : 'رابط PDF غير متاح حالياً.');
+        return;
+      }
+
+      AppSnackBar.info(
+        context,
+        english ? 'Opening PDF download...' : 'جارٍ فتح رابط تنزيل الـ PDF...',
+      );
+
+      final launched = await launchSafeExternalUrl(pdfUrl);
+      if (!launched && context.mounted) {
+        _showMessage(context,
+            english ? 'Could not open the PDF link.' : 'تعذر فتح رابط PDF.');
+      }
+    } finally {
+      if (mounted) setState(() => _isDownloading = false);
     }
   }
 
@@ -255,9 +268,23 @@ class _GeneratedCvScreenState extends State<GeneratedCvScreen> {
                 Expanded(
                   child: PressScale(
                     child: ElevatedButton.icon(
-                      onPressed: () => _downloadPdf(context),
-                      icon: const Icon(Icons.download_outlined, size: 18),
-                      label: Text(english ? 'Download PDF' : 'تنزيل PDF'),
+                      onPressed:
+                          _isDownloading ? null : () => _downloadPdf(context),
+                      icon: _isDownloading
+                          ? SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: context.sirati.primary,
+                              ),
+                            )
+                          : const Icon(Icons.download_outlined, size: 18),
+                      label: Text(
+                        _isDownloading
+                            ? (english ? 'Preparing...' : 'جارٍ التجهيز...')
+                            : (english ? 'Download PDF' : 'تنزيل PDF'),
+                      ),
                     ),
                   ),
                 ),

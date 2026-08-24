@@ -106,11 +106,15 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
-    replaceRoot(context, const LoginScreen());
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+    );
   }
 
   void _goToRegister() {
-    replaceRoot(context, const RegisterScreen());
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const RegisterScreen()),
+    );
   }
 
   void _openPrivacyPolicy() {
