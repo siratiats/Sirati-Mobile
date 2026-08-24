@@ -201,6 +201,7 @@ class _MyCvsScreenState extends State<MyCvsScreen> {
                                 onEdit: () => _editCv(_int(item['id'])),
                                 onDelete: () => _deleteCv(_int(item['id'])),
                                 onDownload: () => _download(
+                                  cvId: _int(item['id']),
                                   pdfUrl: _text(item['pdf_url'], ''),
                                   templatePdfUrl:
                                       _text(item['template_pdf_url'], ''),
@@ -267,16 +268,42 @@ class _MyCvsScreenState extends State<MyCvsScreen> {
     }
   }
 
-  Future<void> _download(
-      {required String pdfUrl, required String templatePdfUrl}) async {
-    final url = templatePdfUrl.isNotEmpty ? templatePdfUrl : pdfUrl;
-    if (url.isEmpty) return;
+  Future<void> _download({
+    int? cvId,
+    required String pdfUrl,
+    required String templatePdfUrl,
+  }) async {
     final english = AppLocale.isEnglish(context);
-    final selection = templatePdfUrl.isNotEmpty
+    final selection = (templatePdfUrl.isNotEmpty || cvId != null)
         ? await _chooseTemplate(english)
         : const _TemplateSelection.useDefault();
     if (!mounted || !selection.shouldDownload) return;
-    final launchUrlText = _urlForTemplate(url, selection.template?.slug);
+
+    AppSnackBar.info(
+      context,
+      english ? 'Opening PDF download...' : 'جارٍ فتح رابط تنزيل الـ PDF...',
+    );
+
+    String launchUrlText = '';
+    if (cvId != null) {
+      try {
+        final cv = await _cvService.getGeneratedCv(cvId);
+        launchUrlText =
+            _cvService.pdfUrlForTemplate(cv, selection.template?.slug);
+      } catch (_) {
+        final url = templatePdfUrl.isNotEmpty ? templatePdfUrl : pdfUrl;
+        launchUrlText = _urlForTemplate(url, selection.template?.slug);
+      }
+    } else {
+      final url = templatePdfUrl.isNotEmpty ? templatePdfUrl : pdfUrl;
+      launchUrlText = _urlForTemplate(url, selection.template?.slug);
+    }
+
+    if (launchUrlText.isEmpty) {
+      _message(english ? 'Could not find PDF link.' : 'تعذر العثور على رابط الـ PDF.');
+      return;
+    }
+
     final launched = await launchSafeExternalUrl(launchUrlText);
     if (!mounted) return;
     if (!launched) {
