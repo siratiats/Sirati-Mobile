@@ -1,7 +1,7 @@
 class ApiConfig {
   static const baseUrl = String.fromEnvironment(
     'SIRATI_API_BASE_URL',
-    defaultValue: 'https://sirati-main-shokc5.laravel.cloud/api',
+    defaultValue: 'https://siratie.com/api',
   );
 
   /// Bump with each store release (no package_info_plus dependency).

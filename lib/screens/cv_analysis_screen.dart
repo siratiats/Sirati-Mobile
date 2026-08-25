@@ -66,7 +66,7 @@ class _CvAnalysisScreenState extends State<CvAnalysisScreen>
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf', 'txt'],
-      withData: false,
+      withData: true,
     );
     if (!mounted) return;
     if (result == null || result.files.isEmpty) return;
