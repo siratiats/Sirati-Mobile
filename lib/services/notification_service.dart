@@ -132,8 +132,13 @@ class NotificationService {
         sound: true,
         provisional: false,
       );
-      return settings.authorizationStatus == AuthorizationStatus.authorized ||
-          settings.authorizationStatus == AuthorizationStatus.provisional;
+      final granted =
+          settings.authorizationStatus == AuthorizationStatus.authorized ||
+              settings.authorizationStatus == AuthorizationStatus.provisional;
+      if (granted) {
+        unawaited(registerToken());
+      }
+      return granted;
     } catch (e) {
       debugPrint('[FCM] Permission request skipped: $e');
       return false;
@@ -143,6 +148,18 @@ class NotificationService {
   /// Get the current FCM registration token.
   Future<String?> getToken() async {
     try {
+      if (!kIsWeb && Platform.isIOS) {
+        // On iOS, FCM getToken() throws if APNs device token has not yet been
+        // received from Apple. Retry a few times to allow APNs callback to settle.
+        String? apnsToken = await _messaging.getAPNSToken();
+        if (apnsToken == null) {
+          for (var i = 0; i < 6; i++) {
+            await Future.delayed(const Duration(milliseconds: 500));
+            apnsToken = await _messaging.getAPNSToken();
+            if (apnsToken != null) break;
+          }
+        }
+      }
       return await _messaging.getToken();
     } catch (e) {
       debugPrint('[FCM] Failed to get token: $e');
