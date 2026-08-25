@@ -951,8 +951,8 @@ class _DashboardNavigationBar extends StatelessWidget {
         index: 2,
         icon: Icons.school_outlined,
         selectedIcon: Icons.school_rounded,
-        labelAr: 'التعليم',
-        labelEn: 'Education',
+        labelAr: 'التعليم (قريباً)',
+        labelEn: 'Education (Soon)',
       ),
       _NavItemData(
         index: 3,

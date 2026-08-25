@@ -145,23 +145,32 @@ class MobileContentService {
   Future<Map<String, dynamic>> jobNews(
     bool english, {
     String? category,
+    String? city,
+    int? jobTitleId,
+    bool? isRemote,
     String? query,
     bool force = false,
   }) {
     final lang = _lang(english);
     final cat = category ?? '';
+    final c = city ?? '';
+    final jt = jobTitleId?.toString() ?? '';
+    final rem = isRemote == true ? '1' : '';
     final q = query?.trim() ?? '';
-    // Disk-cache the default list only (no filter/search).
-    final diskKey = (cat.isEmpty && q.isEmpty) ? DiskCache.newsKey(lang) : null;
+    final isDefault =
+        cat.isEmpty && c.isEmpty && jt.isEmpty && rem.isEmpty && q.isEmpty;
+    final diskKey = isDefault ? DiskCache.newsKey(lang) : null;
     return _cached(
-      'job-news:$lang:$cat:$q',
+      'job-news:$lang:$cat:$c:$jt:$rem:$q',
       force: force,
       diskKey: diskKey,
-      // Search queries: shorter usefulness; still cache briefly in memory.
       ttl: q.isEmpty ? cacheTtl : const Duration(seconds: 30),
       fetch: () async {
         final params = <String, String>{'lang': lang};
-        if (cat.isNotEmpty) params['category'] = cat;
+        if (cat.isNotEmpty && cat != 'all') params['category'] = cat;
+        if (c.isNotEmpty && c != 'all') params['city'] = c;
+        if (jt.isNotEmpty) params['job_title_id'] = jt;
+        if (rem.isNotEmpty) params['is_remote'] = '1';
         if (q.isNotEmpty) params['q'] = q;
         final response = await _apiClient
             .getJson('/mobile/job-news?${Uri(queryParameters: params).query}');

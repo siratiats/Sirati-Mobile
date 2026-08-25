@@ -51,6 +51,7 @@ class _JobNewsScreenState extends State<JobNewsScreen> {
   Future<Map<String, dynamic>>? _jobNewsFuture;
   bool? _loadedEnglish;
   String _selectedCategory = 'all';
+  String _selectedCity = 'all';
   String _searchQuery = '';
   bool _isRefreshing = false;
 
@@ -76,6 +77,8 @@ class _JobNewsScreenState extends State<JobNewsScreen> {
     _jobNewsFuture = MobileContentService().jobNews(
       english,
       category: _selectedCategory == 'all' ? null : _selectedCategory,
+      city: _selectedCity == 'all' ? null : _selectedCity,
+      isRemote: _selectedCity == 'remote',
       query: _searchQuery,
       force: force,
     );
@@ -109,6 +112,14 @@ class _JobNewsScreenState extends State<JobNewsScreen> {
     if (_selectedCategory == category) return;
     setState(() {
       _selectedCategory = category;
+      _reload(force: true);
+    });
+  }
+
+  void _selectCity(String city) {
+    if (_selectedCity == city) return;
+    setState(() {
+      _selectedCity = city;
       _reload(force: true);
     });
   }
@@ -171,7 +182,7 @@ class _JobNewsScreenState extends State<JobNewsScreen> {
                       items.length > 1 ? items.skip(1).toList() : items;
                   final offline = MobileContentService.isOfflinePayload(data);
                   final resultsKey =
-                      '$_selectedCategory|$_searchQuery|${items.length}|${featured?.id ?? 0}';
+                      '$_selectedCategory|$_selectedCity|$_searchQuery|${items.length}|${featured?.id ?? 0}';
 
                   return shell(
                     RefreshIndicator(
@@ -235,6 +246,12 @@ class _JobNewsScreenState extends State<JobNewsScreen> {
                                     english: english,
                                     selectedCategory: _selectedCategory,
                                     onSelected: _selectCategory,
+                                  ),
+                                  const SizedBox(height: AppSpacing.xs),
+                                  _CityChips(
+                                    english: english,
+                                    selectedCity: _selectedCity,
+                                    onSelected: _selectCity,
                                   ),
                                   const SizedBox(height: AppSpacing.md),
                                   // Featured + section title animate on filter;
@@ -687,6 +704,78 @@ class _CategoryOption {
   final String label;
 
   const _CategoryOption(this.key, this.label);
+}
+
+class _CityChips extends StatelessWidget {
+  final bool english;
+  final String selectedCity;
+  final ValueChanged<String> onSelected;
+
+  const _CityChips({
+    required this.english,
+    required this.selectedCity,
+    required this.onSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final options = [
+      _CategoryOption('all', english ? 'All Locations' : 'كل المناطق'),
+      _CategoryOption('riyadh', english ? 'Riyadh' : 'الرياض'),
+      _CategoryOption('jeddah', english ? 'Jeddah' : 'جدة'),
+      _CategoryOption('dammam', english ? 'Dammam' : 'الدمام'),
+      _CategoryOption('khobar', english ? 'Khobar' : 'الخبر'),
+      _CategoryOption('mecca', english ? 'Mecca' : 'مكة'),
+      _CategoryOption('medina', english ? 'Medina' : 'المدينة'),
+      _CategoryOption('remote', english ? 'Remote' : 'عن بعد 🌐'),
+    ];
+
+    return Material(
+      type: MaterialType.transparency,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            for (final option in options)
+              Padding(
+                padding: const EdgeInsets.only(right: 6),
+                child: PressScale(
+                  pressedScale: .98,
+                  child: FilterChip(
+                    label: Text(option.label),
+                    selected: selectedCity == option.key,
+                    onSelected: (_) => onSelected(option.key),
+                    showCheckmark: false,
+                    avatar: option.key == 'remote'
+                        ? const Icon(Icons.public_rounded, size: 14)
+                        : const Icon(Icons.location_on_outlined, size: 14),
+                    labelStyle: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w600,
+                      color: selectedCity == option.key
+                          ? context.sirati.primaryDark
+                          : context.sirati.textSecondary,
+                    ),
+                    selectedColor: context.sirati.primaryLight,
+                    backgroundColor: context.sirati.surface,
+                    side: BorderSide(
+                      color: selectedCity == option.key
+                          ? context.sirati.primary
+                          : context.sirati.border,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _FeaturedJobCard extends StatelessWidget {
