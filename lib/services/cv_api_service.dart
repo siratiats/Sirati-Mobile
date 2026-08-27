@@ -160,7 +160,11 @@ class CvApiService {
     int id,
     Map<String, dynamic> payload,
   ) async {
-    final response = await _apiClient.putJson('/generated-cvs/$id', payload);
+    final response = await _apiClient.putJson(
+      '/generated-cvs/$id',
+      payload,
+      extraHeaders: {'X-Sirati-Async': '1'},
+    );
     return GeneratedCv.fromJson(response['data'] as Map<String, dynamic>);
   }
 
