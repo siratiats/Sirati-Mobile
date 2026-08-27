@@ -62,15 +62,17 @@ class ApiClient {
 
   Future<Map<String, dynamic>> putJson(
     String path,
-    Map<String, dynamic> body,
-  ) async {
+    Map<String, dynamic> body, {
+    Map<String, String>? extraHeaders,
+  }) async {
     final authorized =
         await _authorizedHeaders(contentType: 'application/json');
+    final headers = {...authorized.headers, ...?extraHeaders};
     final response = await _send(
       () {
         return _httpClient.put(
           ApiConfig.uri(path),
-          headers: authorized.headers,
+          headers: headers,
           body: jsonEncode(body),
         );
       },
