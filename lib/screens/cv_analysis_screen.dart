@@ -132,10 +132,14 @@ class _CvAnalysisScreenState extends State<CvAnalysisScreen>
         idempotencyKey: _submitIdempotencyKey,
       );
 
+      progress.setPhase(AiProgressPhase.fromAiStatus(analysis.aiStatus));
+
       final poll = await _apiService.pollAnalysis(
         analysis,
         isCancelled: () => progress.isCancelled || requestId != _aiRequestGen,
         isPaused: () => _pollingPaused,
+        onProgress: (value) =>
+            progress.setPhase(AiProgressPhase.fromAiStatus(value.aiStatus)),
       );
       analysis = poll.value;
 
@@ -152,6 +156,9 @@ class _CvAnalysisScreenState extends State<CvAnalysisScreen>
         score: analysis.scoreTotal,
         durationMs: durationMs,
       );
+      if (!poll.timedOut && analysis.aiStatus != AiStatus.failed) {
+        await progress.complete();
+      }
       await progress.dismiss();
       if (!mounted || requestId != _aiRequestGen) return;
       if (poll.timedOut) {

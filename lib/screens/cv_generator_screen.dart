@@ -506,10 +506,16 @@ class _CvGeneratorScreenState extends State<CvGeneratorScreen>
               idempotencyKey: _submitIdempotencyKey,
             );
 
+      // The create/update call now returns as soon as the record exists, so
+      // the overlay is driven by real job state from here on.
+      progress.setPhase(AiProgressPhase.fromAiStatus(generatedCv.aiStatus));
+
       final poll = await _apiService.pollGeneratedCv(
         generatedCv,
         isCancelled: () => progress.isCancelled || requestId != _aiRequestGen,
         isPaused: () => _pollingPaused,
+        onProgress: (value) =>
+            progress.setPhase(AiProgressPhase.fromAiStatus(value.aiStatus)),
       );
       generatedCv = poll.value;
 
@@ -541,6 +547,11 @@ class _CvGeneratorScreenState extends State<CvGeneratorScreen>
         _isDirty = false;
       }
       // Success check + haptic, then navigate (instant when reduced motion).
+      // complete() ticks the last step and fills the bar before the overlay
+      // pops, so the wait ends on a resolved state instead of a hard cut.
+      if (!poll.timedOut && generatedCv.aiStatus != AiStatus.failed) {
+        await progress.complete();
+      }
       await progress.dismiss();
       if (!mounted || requestId != _aiRequestGen) return;
       if (poll.timedOut) {

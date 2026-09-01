@@ -140,6 +140,7 @@ class _PollingCvApiService extends CvApiService {
     CvAnalysis initial, {
     bool Function()? isCancelled,
     bool Function()? isPaused,
+    void Function(CvAnalysis value)? onProgress,
   }) async {
     statuses.add(AiStatus.processing);
 

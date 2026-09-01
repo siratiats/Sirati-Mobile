@@ -80,8 +80,17 @@ class AppSpacing {
 
   static double pageGutter(double width) => width >= 780 ? lg + 4 : lg;
 
+  /// Extra scroll padding for screens that float their own action bar or FAB
+  /// OVER the list. The dashboard Scaffold already lays its body out above the
+  /// bottom navigation bar (`extendBody` is false), so these values must not be
+  /// used just to "clear the nav bar" -- doing so leaves a visible empty band
+  /// under the last card, which is very obvious on short screens and on iOS
+  /// where bouncing physics let you drag it further into view.
   static const scrollBottomNav = 104.0;
   static const scrollBottomNavFab = 156.0;
+
+  /// Trailing breathing room for a plain tab list inside the dashboard shell.
+  static const scrollBottomTab = 32.0;
 }
 
 /// Shared type ramp. Pass [colors] (e.g. `context.sirati`) for theme-aware text.

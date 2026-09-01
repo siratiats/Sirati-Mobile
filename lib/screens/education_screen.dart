@@ -57,7 +57,10 @@ class _EducationScreenState extends State<EducationScreen> {
                   horizontalPadding,
                   18,
                   horizontalPadding,
-                  AppSpacing.scrollBottomNavFab,
+                  // This tab has no FAB and the shell Scaffold already reserves
+                  // the bottom nav bar's height, so FAB-sized padding here was
+                  // pure dead space at the end of the list.
+                  AppSpacing.scrollBottomTab,
                 ),
                 children: [
                   ScreenHeader(

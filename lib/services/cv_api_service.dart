@@ -48,6 +48,7 @@ class CvApiService {
     CvAnalysis initial, {
     bool Function()? isCancelled,
     bool Function()? isPaused,
+    void Function(CvAnalysis value)? onProgress,
   }) {
     return _poll<CvAnalysis>(
       initial: initial,
@@ -55,6 +56,7 @@ class CvApiService {
       refresh: () => getAnalysis(initial.id),
       isCancelled: isCancelled,
       isPaused: isPaused,
+      onProgress: onProgress,
     );
   }
 
@@ -76,6 +78,13 @@ class CvApiService {
     );
   }
 
+  /// Creates a CV and returns immediately with `ai_status: queued`.
+  ///
+  /// `X-Sirati-Async` is what makes the server queue the OpenAI call instead of
+  /// running it inside the request. Without it the POST blocks for the whole
+  /// generation (15-30s, longer in Arabic, up to ~75s if the provider fallback
+  /// kicks in) while holding a PHP worker. Callers must follow this with
+  /// [pollGeneratedCv].
   Future<GeneratedCv> generateCv(
     Map<String, dynamic> payload, {
     String? idempotencyKey,
@@ -83,7 +92,10 @@ class CvApiService {
     final response = await _apiClient.postJson(
       '/generated-cvs',
       payload,
-      extraHeaders: _idempotencyHeaders(idempotencyKey),
+      extraHeaders: {
+        ..._idempotencyHeaders(idempotencyKey),
+        ...asyncAiHeaders,
+      },
     );
     return GeneratedCv.fromJson(response['data'] as Map<String, dynamic>);
   }
@@ -163,7 +175,7 @@ class CvApiService {
     final response = await _apiClient.putJson(
       '/generated-cvs/$id',
       payload,
-      extraHeaders: {'X-Sirati-Async': '1'},
+      extraHeaders: asyncAiHeaders,
     );
     return GeneratedCv.fromJson(response['data'] as Map<String, dynamic>);
   }
@@ -180,7 +192,10 @@ class CvApiService {
     final response = await _apiClient.postJson(
       '/cv-analyses/$analysisId/generated-cv',
       overrides,
-      extraHeaders: _idempotencyHeaders(idempotencyKey),
+      extraHeaders: {
+        ..._idempotencyHeaders(idempotencyKey),
+        ...asyncAiHeaders,
+      },
     );
 
     return GeneratedCv.fromJson(response['data'] as Map<String, dynamic>);
@@ -195,6 +210,7 @@ class CvApiService {
     GeneratedCv initial, {
     bool Function()? isCancelled,
     bool Function()? isPaused,
+    void Function(GeneratedCv value)? onProgress,
   }) {
     return _poll<GeneratedCv>(
       initial: initial,
@@ -202,6 +218,7 @@ class CvApiService {
       refresh: () => getGeneratedCv(initial.id),
       isCancelled: isCancelled,
       isPaused: isPaused,
+      onProgress: onProgress,
     );
   }
 
@@ -222,6 +239,9 @@ class CvApiService {
       lastPage: _intMeta(response, 'last_page', 1),
     );
   }
+
+  /// Opt-in header that makes the API queue AI work and return immediately.
+  static const Map<String, String> asyncAiHeaders = {'X-Sirati-Async': '1'};
 
   Map<String, String> _idempotencyHeaders(String? key) {
     if (key == null || key.isEmpty) return const {};
@@ -267,12 +287,17 @@ class CvApiService {
     }).toString();
   }
 
+  /// Polls until [statusOf] leaves the pending states.
+  ///
+  /// [onProgress] fires on every refreshed value so the caller can surface real
+  /// job state (queued vs processing) instead of a timer-driven guess.
   Future<AiPollResult<T>> _poll<T>({
     required T initial,
     required String Function(T value) statusOf,
     required Future<T> Function() refresh,
     bool Function()? isCancelled,
     bool Function()? isPaused,
+    void Function(T value)? onProgress,
   }) async {
     var current = initial;
     var elapsed = Duration.zero;
@@ -305,6 +330,7 @@ class CvApiService {
       }
 
       current = await refresh();
+      onProgress?.call(current);
     }
 
     return AiPollResult(value: current);
