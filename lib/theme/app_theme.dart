@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../app_locale.dart';
 import '../widgets/form_fields.dart';
 import '../widgets/motion.dart';
+import 'app_typography.dart';
 import 'sirati_colors.dart';
 
+export 'app_contrast.dart';
+
+export 'app_typography.dart';
 export 'sirati_colors.dart';
 
 /// Light-mode static palette — source of truth for [SiratiColors.light].
@@ -32,7 +37,7 @@ class AppColors {
   static const tertiary = Color(0xFF9A4528);
   static const tertiaryLight = Color(0xFFFFDBD0);
 
-  static const error = red;
+  static const error = Color(0xFFC73B36);
   static const errorLight = redLight;
   static const success = Color(0xFF2E7D5B);
   static const successLight = Color(0xFFD7F0E5);
@@ -91,88 +96,117 @@ class AppSpacing {
 
   /// Trailing breathing room for a plain tab list inside the dashboard shell.
   static const scrollBottomTab = 32.0;
+
+  static const scale = <double>[xxs, xs, sm, md, lg, xl, xxl];
+}
+
+/// Elevation steps per surface type (SIRATI-19).
+class AppElevation {
+  static const none = 0.0;
+  static const card = 1.0;
+  static const raised = 3.0;
+  static const sheet = 6.0;
+  static const dialog = 12.0;
+}
+
+/// Shadows derived from [AppElevation] + the active palette.
+class AppShadows {
+  static List<BoxShadow> of(SiratiColors colors, {required double elevation}) {
+    if (elevation <= 0) return const <BoxShadow>[];
+    final dark = colors.surface.computeLuminance() < 0.5;
+    final opacity = dark ? 0.36 : 0.08;
+    return [
+      BoxShadow(
+        color: Color.fromRGBO(0, 0, 0, opacity),
+        blurRadius: elevation * 2.4,
+        offset: Offset(0, elevation * 0.6),
+      ),
+    ];
+  }
 }
 
 /// Shared type ramp. Pass [colors] (e.g. `context.sirati`) for theme-aware text.
 /// Defaults to light palette when omitted (safe for unmigrated call sites).
+///
+/// All styles come from [AppTypography] tokens (SIRATI-18).
 class AppTextStyles {
-  static TextStyle titleLg([SiratiColors? colors]) {
+  static bool _arabicDefault() => AppLocale.languageCode.value != 'en';
+
+  static TextStyle titleLg([SiratiColors? colors, bool? arabic]) {
     final c = colors ?? SiratiColors.light;
-    return TextStyle(
-      fontSize: 18,
-      height: 1.35,
-      fontWeight: FontWeight.w800,
+    return AppTypography.titleLg.resolve(
+      arabic: arabic ?? _arabicDefault(),
       color: c.textPrimary,
     );
   }
 
-  static TextStyle titleMd([SiratiColors? colors]) {
+  static TextStyle titleMd([SiratiColors? colors, bool? arabic]) {
     final c = colors ?? SiratiColors.light;
-    return TextStyle(
-      fontSize: 15,
-      height: 1.4,
-      fontWeight: FontWeight.w700,
+    return AppTypography.titleMd.resolve(
+      arabic: arabic ?? _arabicDefault(),
       color: c.textPrimary,
     );
   }
 
-  static TextStyle titleSm([SiratiColors? colors]) {
+  static TextStyle titleSm([SiratiColors? colors, bool? arabic]) {
     final c = colors ?? SiratiColors.light;
-    return TextStyle(
-      fontSize: 14,
-      height: 1.4,
-      fontWeight: FontWeight.w700,
+    return AppTypography.titleSm.resolve(
+      arabic: arabic ?? _arabicDefault(),
       color: c.textPrimary,
     );
   }
 
-  static TextStyle bodyMd([SiratiColors? colors]) {
+  static TextStyle bodyMd([SiratiColors? colors, bool? arabic]) {
     final c = colors ?? SiratiColors.light;
-    return TextStyle(
-      fontSize: 14,
-      height: 1.55,
-      fontWeight: FontWeight.w400,
+    return AppTypography.bodyMd.resolve(
+      arabic: arabic ?? _arabicDefault(),
       color: c.textPrimary,
     );
   }
 
-  static TextStyle bodySm([SiratiColors? colors]) {
+  static TextStyle bodySm([SiratiColors? colors, bool? arabic]) {
     final c = colors ?? SiratiColors.light;
-    return TextStyle(
-      fontSize: 12.5,
-      height: 1.5,
-      fontWeight: FontWeight.w400,
+    return AppTypography.bodySm.resolve(
+      arabic: arabic ?? _arabicDefault(),
       color: c.textSecondary,
     );
   }
 
-  static TextStyle labelMd([SiratiColors? colors]) {
+  static TextStyle labelMd([SiratiColors? colors, bool? arabic]) {
     final c = colors ?? SiratiColors.light;
-    return TextStyle(
-      fontSize: 12,
-      height: 1.35,
-      fontWeight: FontWeight.w600,
+    return AppTypography.labelMd.resolve(
+      arabic: arabic ?? _arabicDefault(),
       color: c.textSecondary,
     );
   }
 
-  static TextStyle displayStat([SiratiColors? colors]) {
+  static TextStyle displayStat([SiratiColors? colors, bool? arabic]) {
     final c = colors ?? SiratiColors.light;
-    return TextStyle(
-      fontSize: 28,
-      height: 1.1,
-      fontWeight: FontWeight.w800,
+    return AppTypography.displayMd.resolve(
+      arabic: arabic ?? _arabicDefault(),
       color: c.textPrimary,
     );
   }
 }
 
 class AppTheme {
-  static ThemeData get light => _build(SiratiColors.light, Brightness.light);
+  static ThemeData get light =>
+      _build(SiratiColors.light, Brightness.light, arabic: true);
 
-  static ThemeData get dark => _build(SiratiColors.dark, Brightness.dark);
+  static ThemeData get dark =>
+      _build(SiratiColors.dark, Brightness.dark, arabic: true);
 
-  static ThemeData _build(SiratiColors c, Brightness brightness) {
+  static ThemeData lightFor({required bool arabic}) =>
+      _build(SiratiColors.light, Brightness.light, arabic: arabic);
+
+  static ThemeData darkFor({required bool arabic}) =>
+      _build(SiratiColors.dark, Brightness.dark, arabic: arabic);
+
+  static ThemeData _build(
+    SiratiColors c,
+    Brightness brightness, {
+    required bool arabic,
+  }) {
     final isDark = brightness == Brightness.dark;
     return ThemeData(
       useMaterial3: true,
@@ -193,43 +227,16 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: c.background,
       fontFamily: 'IBM Plex Sans Arabic',
-      textTheme: TextTheme(
-        headlineLarge: TextStyle(
-          fontSize: 28,
-          height: 1.3,
-          fontWeight: FontWeight.w800,
-          color: c.textPrimary,
-        ),
-        headlineMedium: TextStyle(
-          fontSize: 22,
-          height: 1.35,
-          fontWeight: FontWeight.w800,
-          color: c.textPrimary,
-        ),
-        titleLarge: AppTextStyles.titleLg(c),
-        titleMedium: AppTextStyles.titleMd(c),
-        titleSmall: AppTextStyles.titleSm(c),
-        bodyLarge: AppTextStyles.bodyMd(c),
-        bodyMedium: AppTextStyles.bodySm(c),
-        labelLarge: TextStyle(
-          fontSize: 14,
-          height: 1.4,
-          fontWeight: FontWeight.w700,
-          color: c.textPrimary,
-        ),
-        labelMedium: AppTextStyles.labelMd(c),
-      ),
+      textTheme: AppTypography.textTheme(c, arabic: arabic),
       appBarTheme: AppBarTheme(
         backgroundColor: c.background,
         foregroundColor: c.textPrimary,
         elevation: 0,
         centerTitle: true,
         systemOverlayStyle: systemUiOverlayStyle(c, brightness),
-        titleTextStyle: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
+        titleTextStyle: AppTypography.titleLg.resolve(
+          arabic: arabic,
           color: c.textPrimary,
-          fontFamily: 'IBM Plex Sans Arabic',
         ),
         iconTheme: IconThemeData(color: c.textSecondary, size: 22),
       ),
@@ -241,7 +248,7 @@ class AppTheme {
           elevation: 0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+          textStyle: AppTypography.labelLg.resolve(arabic: arabic),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -251,13 +258,13 @@ class AppTheme {
           minimumSize: const Size.fromHeight(54),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+          textStyle: AppTypography.labelLg.resolve(arabic: arabic),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: c.primary,
-          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          textStyle: AppTypography.labelMd.resolve(arabic: arabic),
         ),
       ),
       inputDecorationTheme: AppFormStyles.inputThemeFor(c),
@@ -265,15 +272,17 @@ class AppTheme {
         color: c.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: AppRadius.xlAll,
           side: BorderSide.none,
         ),
         margin: EdgeInsets.zero,
       ),
       chipTheme: ChipThemeData(
         backgroundColor: c.primaryLight,
-        labelStyle: TextStyle(
-            color: c.primaryDark, fontSize: 12, fontWeight: FontWeight.w600),
+        labelStyle: AppTypography.labelMd.resolve(
+          arabic: arabic,
+          color: c.primaryDark,
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         side: BorderSide.none,
@@ -287,9 +296,8 @@ class AppTheme {
         backgroundColor: c.surface,
         selectedItemColor: c.primary,
         unselectedItemColor: c.textHint,
-        selectedLabelStyle:
-            const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700),
-        unselectedLabelStyle: const TextStyle(fontSize: 11.5),
+        selectedLabelStyle: AppTypography.labelSm.resolve(arabic: arabic),
+        unselectedLabelStyle: AppTypography.labelSm.resolve(arabic: arabic),
         elevation: 0,
         type: BottomNavigationBarType.fixed,
       ),
@@ -297,8 +305,8 @@ class AppTheme {
         labelColor: c.primary,
         unselectedLabelColor: c.textHint,
         indicatorColor: c.primary,
-        labelStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-        unselectedLabelStyle: const TextStyle(fontSize: 14),
+        labelStyle: AppTypography.labelLg.resolve(arabic: arabic),
+        unselectedLabelStyle: AppTypography.labelLg.resolve(arabic: arabic),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: c.primary,
@@ -310,8 +318,10 @@ class AppTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: isDark ? c.surfaceHigh : c.textPrimary,
-        contentTextStyle:
-            TextStyle(color: isDark ? c.textPrimary : Colors.white),
+        contentTextStyle: AppTypography.bodyMd.resolve(
+          arabic: arabic,
+          color: isDark ? c.textPrimary : Colors.white,
+        ),
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
@@ -369,14 +379,14 @@ class AppCard extends StatelessWidget {
     final c = context.sirati;
     return Material(
       color: color ?? c.surface,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: AppRadius.xlAll,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: AppRadius.xlAll,
         child: Container(
-          padding: padding ?? const EdgeInsets.all(16),
+          padding: padding ?? const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: AppRadius.xlAll,
             border: Border.all(color: c.border),
             boxShadow: c.softShadow,
           ),
@@ -482,11 +492,7 @@ class SectionTitle extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-              color: context.sirati.textPrimary,
-            ),
+            style: AppTypography.of(context, AppTypography.titleSm),
           ),
         ),
         if (trailing != null) trailing!,
@@ -509,9 +515,10 @@ class StatusChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration:
           BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20)),
-      child: Text(label,
-          style:
-              TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: fg)),
+      child: Text(
+        label,
+        style: AppTypography.of(context, AppTypography.labelMd, color: fg),
+      ),
     );
   }
 }

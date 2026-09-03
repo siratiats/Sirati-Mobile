@@ -34,61 +34,61 @@ class AppEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final panel = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 72,
-            height: 72,
-            decoration: BoxDecoration(
-              color: iconBackground ?? context.sirati.primaryLight,
-              borderRadius: BorderRadius.circular(22),
+    final panel = Semantics(
+      container: true,
+      label: title,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 72,
+              height: 72,
+              decoration: BoxDecoration(
+                color: iconBackground ?? context.sirati.primaryLight,
+                borderRadius: BorderRadius.circular(22),
+              ),
+              child: Icon(icon,
+                  size: 32, color: iconColor ?? context.sirati.primary),
             ),
-            child: Icon(icon,
-                size: 32, color: iconColor ?? context.sirati.primary),
-          ),
-          const SizedBox(height: AppSpacing.md + 2),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.titleLg(),
-          ),
-          if (subtitle != null && subtitle!.trim().isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.xs),
+            const SizedBox(height: AppSpacing.md + 2),
             Text(
-              subtitle!,
+              title,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyMd().copyWith(
-                color: context.sirati.textSecondary,
-                height: 1.55,
-              ),
+              style: AppTypography.of(context, AppTypography.titleLg),
             ),
-          ],
-          if (actionLabel != null && onAction != null) ...[
-            const SizedBox(height: AppSpacing.lg),
-            FilledButton.icon(
-              onPressed: onAction,
-              icon: Icon(actionIcon, size: 18),
-              label: Text(actionLabel!),
-              style: FilledButton.styleFrom(
-                backgroundColor: context.sirati.primary,
-                foregroundColor: Colors.white,
-                minimumSize: const Size(0, 46),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                textStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+            if (subtitle != null && subtitle!.trim().isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                subtitle!,
+                textAlign: TextAlign.center,
+                style: AppTypography.of(
+                  context,
+                  AppTypography.bodyMd,
+                  color: context.sirati.textSecondary,
                 ),
               ),
-            ),
+            ],
+            if (actionLabel != null && onAction != null) ...[
+              const SizedBox(height: AppSpacing.lg),
+              FilledButton.icon(
+                onPressed: onAction,
+                icon: Icon(actionIcon, size: 18),
+                label: Text(actionLabel!),
+                style: FilledButton.styleFrom(
+                  backgroundColor: context.sirati.primary,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(0, AppTouchTarget.min),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                  textStyle: AppTypography.of(context, AppTypography.labelLg),
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
 

@@ -81,6 +81,19 @@ class SiratiColors extends ThemeExtension<SiratiColors> {
   final LinearGradient primaryGradient;
   final List<BoxShadow> softShadow;
 
+  /// Semantic aliases (SIRATI-17). Prefer these names in new widgets.
+  Color get onSurface => textPrimary;
+  Color get onSurfaceVariant => textSecondary;
+  Color get onSurfaceMuted => textHint;
+  Color get outline => border;
+  Color get outlineVariant => borderStrong;
+
+  /// Text/icons sitting on [error] fills. Pick the ink with higher contrast.
+  Color get onError {
+    const darkInk = Color(0xFF1A0504);
+    return error.computeLuminance() > 0.18 ? darkInk : Colors.white;
+  }
+
   /// Light palette — mirrors historical [AppColors] constants.
   static const light = SiratiColors(
     primary: Color(0xFF00A898),
@@ -99,7 +112,7 @@ class SiratiColors extends ThemeExtension<SiratiColors> {
     redLight: Color(0xFFFFE1DE),
     tertiary: Color(0xFF9A4528),
     tertiaryLight: Color(0xFFFFDBD0),
-    error: Color(0xFFD8403A),
+    error: Color(0xFFC73B36),
     errorLight: Color(0xFFFFE1DE),
     success: Color(0xFF2E7D5B),
     successLight: Color(0xFFD7F0E5),

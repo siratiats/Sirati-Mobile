@@ -11,6 +11,7 @@ import '../services/api_exception.dart';
 import '../services/auth_api_service.dart';
 import '../services/mobile_content_service.dart';
 import '../theme/app_theme.dart';
+import '../routing/app_router.dart';
 import '../utils/root_navigation.dart';
 import '../widgets/app_snack_bar.dart';
 import '../widgets/auth_form_constraint.dart';
@@ -21,7 +22,6 @@ import '../widgets/motion.dart';
 import '../widgets/password_strength_meter.dart';
 import '../widgets/submit_button.dart';
 import 'email_verification_screen.dart';
-import 'home_screen.dart';
 import 'login_screen.dart';
 import 'splash_screen.dart';
 
@@ -162,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _continueAsPreview() {
     // Use pushAndRemoveUntil so HomeScreen becomes the root route,
     // preventing the back button from returning to the welcome/auth screens.
-    replaceRoot(context, const HomeScreen());
+    AppRouter.openAfterAuth(context);
   }
 
   void _handleBack() {

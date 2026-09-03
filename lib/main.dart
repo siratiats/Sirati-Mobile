@@ -12,13 +12,9 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'app_locale.dart';
 import 'theme/app_theme.dart';
 import 'theme/app_theme_controller.dart';
-import 'screens/cv_generator_screen.dart';
-import 'screens/home_screen.dart';
-import 'screens/history_screen.dart';
-import 'screens/job_news_screen.dart';
-import 'screens/privacy_policy_screen.dart';
-import 'screens/register_screen.dart';
-import 'screens/splash_screen.dart';
+import 'logging/app_log.dart';
+import 'routing/app_router.dart';
+import 'screens/app_crash_view.dart';
 import 'services/analytics_service.dart';
 import 'services/auth_session_guard.dart';
 import 'services/notification_service.dart';
@@ -36,10 +32,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
   debugPrint('[FCM] Background message: ${message.messageId}');
 }
-
-/// Global navigator for session-expiry redirects outside the widget tree.
-final GlobalKey<NavigatorState> siratiNavigatorKey =
-    GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   await SentryFlutter.init(
@@ -66,6 +58,12 @@ Future<void> main() async {
     },
     appRunner: () async {
       WidgetsFlutterBinding.ensureInitialized();
+      AppRouter.install();
+      _installAppLogErrorHandlers();
+      ErrorWidget.builder = (details) {
+        AppLog.error('Uncaught widget error', error: details.exception);
+        return const AppCrashView();
+      };
 
       // Local prefs first — never block the UI shell on Firebase.
       try {
@@ -151,6 +149,24 @@ Future<bool> _initFirebaseStack() async {
   return true;
 }
 
+void _installAppLogErrorHandlers() {
+  final previousFlutterOnError = FlutterError.onError;
+  FlutterError.onError = (details) {
+    AppLog.error(
+      'FlutterError',
+      error: details.exception,
+      stackTrace: details.stack,
+    );
+    previousFlutterOnError?.call(details);
+  };
+
+  final previousPlatformOnError = PlatformDispatcher.instance.onError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    AppLog.error('PlatformError', error: error, stackTrace: stack);
+    return previousPlatformOnError?.call(error, stack) ?? false;
+  };
+}
+
 void _installCrashlyticsErrorHandlers() {
   unawaited(FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true));
 
@@ -174,9 +190,6 @@ class SiratiApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Preview deep-links are web-only; native always boots via SplashScreen.
-    final previewScreen = kIsWeb ? Uri.base.queryParameters['screen'] : null;
-
     return ValueListenableBuilder<String>(
       valueListenable: AppLocale.languageCode,
       builder: (context, language, _) {
@@ -187,8 +200,8 @@ class SiratiApp extends StatelessWidget {
               navigatorKey: siratiNavigatorKey,
               title: language == 'en' ? 'Sirati' : 'سيرتي',
               debugShowCheckedModeBanner: false,
-              theme: AppTheme.light,
-              darkTheme: AppTheme.dark,
+              theme: AppTheme.lightFor(arabic: language != 'en'),
+              darkTheme: AppTheme.darkFor(arabic: language != 'en'),
               themeMode: themeMode,
               locale: AppLocale.locale,
               navigatorObservers: AnalyticsService.navigatorObservers,
@@ -245,17 +258,10 @@ class SiratiApp extends StatelessWidget {
                   ),
                 );
               },
-              home: switch (previewScreen) {
-                'register' => const RegisterScreen(),
-                'create-cv' => const CvGeneratorScreen(),
-                'mycvs' => const HomeScreen(initialIndex: 1),
-                'education' => const HomeScreen(initialIndex: 2),
-                'history' => const HistoryScreen(),
-                'job-news' => const JobNewsScreen(),
-                'privacy' => const PrivacyPolicyScreen(),
-                'home' => const HomeScreen(),
-                _ => const SplashScreen(),
-              },
+              initialRoute: AppRouter.resolveInitialRoute(),
+              onGenerateInitialRoutes: AppRouter.onGenerateInitialRoutes,
+              onGenerateRoute: AppRouter.onGenerateRoute,
+              onUnknownRoute: AppRouter.onUnknownRoute,
             );
           },
         );

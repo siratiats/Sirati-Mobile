@@ -37,6 +37,33 @@ class CvTemplate {
       isDefault: json['is_default'] == true,
     );
   }
+
+  /// Canonical sections this layout will not display.
+  List<String> omittedCanonicalSections(Iterable<String> populated) {
+    if (supportedSections.isEmpty) return const [];
+    const aliases = <String, List<String>>{
+      'summary': ['summary', 'career_objective', 'executive_profile'],
+      'skills': ['skills', 'technical_skills', 'core_competencies', 'tools'],
+      'experience': ['experience', 'leadership_experience'],
+      'education': ['education'],
+      'certifications': ['certifications'],
+      'projects': ['projects', 'open_source', 'internships'],
+      'languages': ['languages'],
+      'custom_sections': [
+        'custom_sections',
+        'achievements',
+        'board_roles',
+        'activities',
+        'volunteering',
+        'revenue_highlights',
+      ],
+    };
+
+    return populated.where((section) {
+      final names = aliases[section] ?? [section];
+      return names.every((name) => !supportedSections.contains(name));
+    }).toList();
+  }
 }
 
 int _asInt(dynamic value, {int fallback = 0}) {

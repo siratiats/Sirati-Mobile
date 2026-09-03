@@ -6,13 +6,13 @@ import '../services/auth_api_service.dart';
 import '../services/auth_token_store.dart';
 import '../services/preference_store.dart';
 import '../theme/app_theme.dart';
+import '../routing/app_router.dart';
 import '../utils/root_navigation.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/loading/branded_loader.dart';
 import '../widgets/motion.dart';
 import '../widgets/submit_button.dart';
 import 'email_verification_screen.dart';
-import 'home_screen.dart';
 import 'login_screen.dart';
 import 'onboarding_screen.dart';
 import 'privacy_policy_screen.dart';
@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (!mounted) return;
-    replaceRoot(context, const HomeScreen());
+    AppRouter.openAfterAuth(context);
   }
 
   void _onOnboardingFinished() {

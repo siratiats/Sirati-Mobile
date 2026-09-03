@@ -7,13 +7,13 @@ import '../app_locale.dart';
 import '../services/api_exception.dart';
 import '../services/auth_api_service.dart';
 import '../theme/app_theme.dart';
+import '../routing/app_router.dart';
 import '../utils/root_navigation.dart';
 import '../widgets/app_snack_bar.dart';
 import '../widgets/auth_form_constraint.dart';
 import '../widgets/form_fields.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/submit_button.dart';
-import 'home_screen.dart';
 import 'login_screen.dart';
 
 /// 6-digit OTP email verification after register / unverified login.
@@ -92,7 +92,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         context,
         english ? 'Email verified successfully.' : 'تم تأكيد البريد بنجاح.',
       );
-      replaceRoot(context, const HomeScreen());
+      AppRouter.openAfterAuth(context);
     } on ApiException catch (exception) {
       if (mounted) {
         AppSnackBar.fromException(

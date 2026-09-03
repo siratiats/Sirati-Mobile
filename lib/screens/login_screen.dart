@@ -6,6 +6,7 @@ import '../services/analytics_service.dart';
 import '../services/api_exception.dart';
 import '../services/auth_api_service.dart';
 import '../theme/app_theme.dart';
+import '../routing/app_router.dart';
 import '../utils/root_navigation.dart';
 import '../widgets/app_snack_bar.dart';
 import '../widgets/auth_form_constraint.dart';
@@ -16,7 +17,6 @@ import '../widgets/submit_button.dart';
 import 'email_verification_screen.dart';
 import 'forgot_password_screen.dart';
 import 'register_screen.dart';
-import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   /// When true, shows a one-shot "session expired" snackbar after first frame.
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
         return;
       }
-      replaceRoot(context, const HomeScreen());
+      AppRouter.openAfterAuth(context);
     } on ApiException catch (exception) {
       if (mounted) {
         AppSnackBar.fromException(

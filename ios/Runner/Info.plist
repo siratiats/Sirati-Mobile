@@ -58,5 +58,20 @@
 	<string>Sirati uses your location to show job opportunities and CV templates relevant to your area.</string>
 	<key>MinimumOSVersion</key>
 	<string>15.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>app.sirati.deeplink</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sirati</string>
+			</array>
+		</dict>
+	</array>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 </dict>
 </plist>

@@ -13,11 +13,12 @@ class AppThemeController {
   static final ValueNotifier<ThemeMode> themeMode =
       ValueNotifier<ThemeMode>(ThemeMode.system);
 
-  static const PreferenceStore _prefs = PreferenceStore();
+  @visibleForTesting
+  static PreferenceStore preferences = const PreferenceStore();
 
   static Future<void> bootstrap() async {
     try {
-      final stored = await _prefs.readThemeMode();
+      final stored = await preferences.readThemeMode();
       themeMode.value = _parse(stored);
     } catch (_) {
       // Keep system default.
@@ -29,7 +30,7 @@ class AppThemeController {
     themeMode.value = mode;
     final serialized = _serialize(mode);
     try {
-      await _prefs.saveThemeMode(serialized);
+      await preferences.saveThemeMode(serialized);
     } catch (_) {
       // In-memory still applied.
     }
@@ -60,5 +61,11 @@ class AppThemeController {
       case ThemeMode.system:
         return 'system';
     }
+  }
+
+  @visibleForTesting
+  static void resetForTest() {
+    themeMode.value = ThemeMode.system;
+    preferences = const PreferenceStore();
   }
 }
