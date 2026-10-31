@@ -77,6 +77,7 @@ class AnalysisResultScreen extends ConsumerWidget {
                 weaknesses: analysis.weaknesses,
                 strengths: analysis.strengths,
                 quickWins: analysis.quickWins,
+                hidden: analysis.hidden,
                 english: english,
               ),
             ],
@@ -131,7 +132,8 @@ class AnalysisResultScreen extends ConsumerWidget {
         } else if (aiFailed) {
           AppSnackBar.error(
             context,
-            AiErrorMessage.generationFailed(aiError, english: english),
+            AiErrorMessage.generationFailed(
+                aiError, AppLocalizations.of(context)),
             actionLabel: AppLocalizations.of(context).retry,
             onAction: () => _generate(context, ref),
           );

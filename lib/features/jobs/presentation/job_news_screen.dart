@@ -13,11 +13,12 @@ import 'package:sirati/features/jobs/presentation/widgets/featured_job_card.dart
 import 'package:sirati/features/jobs/presentation/widgets/job_news_card.dart';
 import 'package:sirati/features/jobs/presentation/widgets/job_news_common.dart';
 import 'package:sirati/features/jobs/presentation/widgets/job_news_filters_bar.dart';
-import 'package:sirati/features/jobs/presentation/widgets/profile_context_banner.dart';
+import 'package:sirati/features/jobs/presentation/widgets/matched_preset_note.dart';
 import 'package:sirati/l10n/generated/app_localizations.dart';
 import 'package:sirati/shared/models/job_news.dart';
 import 'package:sirati/shared/services/session_cache.dart';
 import 'package:sirati/shared/theme/app_theme.dart';
+import 'package:sirati/shared/widgets/empty_state.dart';
 import 'package:sirati/shared/widgets/loading/app_async_body.dart';
 import 'package:sirati/shared/widgets/loading/app_skeleton.dart';
 import 'package:sirati/shared/widgets/loading/async_value_snapshot.dart';
@@ -46,8 +47,13 @@ class _JobNewsScreenState extends ConsumerState<JobNewsScreen> {
     super.didUpdateWidget(oldWidget);
     // Returning to the tab always refetches so backend changes show up
     // immediately instead of after a restart or cache expiry.
+    // After the frame: this runs mid-build, and the refresh dirties other
+    // widgets watching the feed (the Home tab's jobs section).
     if (widget.isActive && !oldWidget.isActive) {
-      unawaited(refreshJobNews(ref, english: AppLocale.isEnglish(context)));
+      final english = AppLocale.isEnglish(context);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) unawaited(refreshJobNews(ref, english: english));
+      });
     }
   }
 
@@ -101,31 +107,52 @@ class _JobNewsScreenState extends ConsumerState<JobNewsScreen> {
                 ),
               );
 
+          void retry() => ref.invalidate(jobNewsFeedProvider(english));
+
+          Widget list(JobNewsFeed data, {String? errorMessage}) => shell(
+                _JobNewsList(
+                  feed: data,
+                  filters: filters,
+                  english: english,
+                  horizontalPadding: horizontalPadding,
+                  isReloading: feed.isLoading,
+                  errorMessage: errorMessage,
+                  onRetry: retry,
+                  searchController: _searchController,
+                  onSearchChanged: _onSearchChanged,
+                  onClearFilters: _clearFilters,
+                  onRefresh: () => refreshJobNews(ref, english: english),
+                  onOpenJob: _openJob,
+                ),
+              );
+
           return AppAsyncBody<JobNewsFeed>(
             snapshot: feed.toSnapshot(),
             english: english,
-            onRetry: () => ref.invalidate(jobNewsFeedProvider(english)),
-            fallbackOnEmptyError: JobNewsFeed.empty(english: english),
+            onRetry: retry,
+            fallbackOnEmptyError: const JobNewsFeed.empty(),
             errorMessage: (error) => error is ApiException
                 ? error.displayMessage
                 : AppLocalizations.of(context).jobsLoadFailed,
+            // Offline takes the whole tab (nothing can load); any other
+            // failure keeps the search and chips so the filters that
+            // failed stay visible and changeable, and never shows the
+            // previous results as if they were current.
+            errorBuilder: (error, message) =>
+                error is ApiException && error.type == ApiErrorType.network
+                    ? AppErrorState(
+                        message: message,
+                        english: english,
+                        exception: error,
+                        onRetry: () => refreshJobNews(ref, english: english),
+                        onOpenSaved: () =>
+                            Navigator.of(context).pushNamed(AppRoutes.myCvs),
+                      )
+                    : list(const JobNewsFeed.empty(), errorMessage: message),
             loading: shell(
               JobNewsSkeleton(horizontalPadding: horizontalPadding),
             ),
-            builder: (data) => shell(
-              _JobNewsList(
-                feed: data,
-                filters: filters,
-                english: english,
-                horizontalPadding: horizontalPadding,
-                isReloading: feed.isLoading,
-                searchController: _searchController,
-                onSearchChanged: _onSearchChanged,
-                onClearFilters: _clearFilters,
-                onRefresh: () => refreshJobNews(ref, english: english),
-                onOpenJob: _openJob,
-              ),
-            ),
+            builder: list,
           );
         },
       ),
@@ -140,6 +167,8 @@ class _JobNewsList extends ConsumerWidget {
     required this.english,
     required this.horizontalPadding,
     required this.isReloading,
+    required this.errorMessage,
+    required this.onRetry,
     required this.searchController,
     required this.onSearchChanged,
     required this.onClearFilters,
@@ -152,6 +181,10 @@ class _JobNewsList extends ConsumerWidget {
   final bool english;
   final double horizontalPadding;
   final bool isReloading;
+
+  /// Set when the last load failed: shown with [onRetry] in place of results.
+  final String? errorMessage;
+  final VoidCallback onRetry;
   final TextEditingController searchController;
   final ValueChanged<String> onSearchChanged;
   final VoidCallback onClearFilters;
@@ -160,13 +193,18 @@ class _JobNewsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     final filterController = ref.read(jobNewsFiltersProvider.notifier);
-    final featured = feed.featured;
-    final latest = feed.latest;
-    final profile = feed.profile;
+    final now = DateTime.now();
+    final failed = errorMessage != null;
+    final featured = failed ? null : feed.featuredAt(now);
+    final latest = failed ? const <JobNews>[] : feed.latestAt(now);
+    final regionOnly = filters.region != JobNewsFilters.all &&
+        filters.preset == JobNewsFilters.all &&
+        filters.query.trim().isEmpty;
     // Changing filters or results swaps the featured block with an animation.
     final resultsKey = '${filters.hashCode}|${feed.items.length}|'
-        '${featured?.id ?? 0}';
+        '${featured?.id ?? 0}|$failed';
 
     return RefreshIndicator(
       color: context.sirati.primary,
@@ -183,7 +221,7 @@ class _JobNewsList extends ConsumerWidget {
                 children: [
                   ScreenHeader(
                     english: english,
-                    title: feed.title,
+                    title: l.jobNewsTitle,
                     icon: Icons.work_rounded,
                     unreadCount: SessionCache.instance.unreadCount,
                     onNotifications: () => Navigator.of(context)
@@ -200,15 +238,6 @@ class _JobNewsList extends ConsumerWidget {
                       padding: EdgeInsets.only(top: 10, bottom: 2),
                       child: LinearProgressIndicator(minHeight: 3),
                     ),
-                  if (profile != null && profile.hasProfile) ...[
-                    const SizedBox(height: AppSpacing.md),
-                    ProfileContextBanner(
-                      english: english,
-                      profile: profile,
-                      isMatchedActive: filters.preset == 'matched',
-                      onToggleMatched: filterController.toggleMatched,
-                    ),
-                  ],
                   const SizedBox(height: AppSpacing.md),
                   JobSearchBar(
                     english: english,
@@ -222,18 +251,20 @@ class _JobNewsList extends ConsumerWidget {
                     onSelected: filterController.setPreset,
                   ),
                   const SizedBox(height: AppSpacing.xs),
-                  CategoryChips(
-                    english: english,
-                    selectedCategory: filters.category,
-                    onSelected: filterController.setCategory,
+                  RegionChips(
+                    selectedRegion: filters.region,
+                    onSelected: filterController.setRegion,
                   ),
-                  const SizedBox(height: AppSpacing.xs),
-                  CityChips(
-                    english: english,
-                    selectedCity: filters.city,
-                    onSelected: filterController.setCity,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
+                  if (filters.preset == 'matched') ...[
+                    const SizedBox(height: AppSpacing.sm),
+                    MatchedPresetNote(
+                      profile: feed.profile,
+                      // Guests get the sign-in invitation from the route.
+                      onSetJobTitle: () =>
+                          Navigator.of(context).pushNamed(AppRoutes.profile),
+                    ),
+                  ],
+                  const SizedBox(height: AppSpacing.lg),
                   AnimatedSwitcher(
                     duration: MotionSettings.reduce(context)
                         ? Duration.zero
@@ -244,7 +275,14 @@ class _JobNewsList extends ConsumerWidget {
                       key: ValueKey(resultsKey),
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (featured != null) ...[
+                        if (failed)
+                          AppErrorState(
+                            message: errorMessage!,
+                            english: english,
+                            onRetry: onRetry,
+                            scrollable: false,
+                          )
+                        else if (featured != null) ...[
                           MotionReveal(
                             order: 0,
                             child: FeaturedJobCard(
@@ -255,15 +293,22 @@ class _JobNewsList extends ConsumerWidget {
                           ),
                           const SizedBox(height: AppSpacing.lg),
                         ],
-                        if (feed.items.isEmpty)
+                        if (failed)
+                          const SizedBox.shrink()
+                        else if (feed.items.isEmpty)
                           EmptyJobNews(
                             english: english,
+                            regionLabel: regionOnly
+                                ? jobRegionLabel(l, filters.region)
+                                : null,
+                            onShowAllRegions: () =>
+                                filterController.setRegion(JobNewsFilters.all),
                             onClearFilters:
                                 filters.isActive ? onClearFilters : null,
                           )
                         else if (latest.isNotEmpty) ...[
                           Text(
-                            AppLocalizations.of(context).jobsLatestPostings,
+                            l.jobsLatestPostings,
                             textAlign: TextAlign.start,
                             style: AppTextStyles.titleMd(context.sirati),
                           ),
@@ -284,14 +329,14 @@ class _JobNewsList extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final item = latest[index];
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.sm + 2),
                   // +1: the featured card is reveal order 0.
                   child: MotionReveal(
                     order: index + 1,
                     child: JobNewsCard(
                       item: item,
                       english: english,
-                      isNew: index == 0,
+                      now: now,
                       onTap: () => onOpenJob(item),
                     ),
                   ),

@@ -40,6 +40,28 @@ class AuthApiService {
     return session;
   }
 
+  /// Exchanges a provider ID token (`google`, `apple`) for a Sirati session.
+  /// The server verifies the token; the answer is the same as [login]'s.
+  Future<AuthSession> socialSignIn({
+    required String provider,
+    required String idToken,
+    String? nonce,
+    String? authorizationCode,
+    String? name,
+  }) async {
+    final response = await _publicClient.postJson('/auth/social/$provider', {
+      'id_token': idToken,
+      if (nonce != null) 'nonce': nonce,
+      if (authorizationCode != null) 'authorization_code': authorizationCode,
+      if (name != null) 'name': name,
+      'device_name': 'sirati-mobile',
+    });
+
+    final session = AuthSession.fromJson(response);
+    await _saveSession(session);
+    return session;
+  }
+
   Future<AuthSession> register({
     required String name,
     required String email,
@@ -103,36 +125,30 @@ class AuthApiService {
     return user;
   }
 
-  Future<String> resendVerification() async {
-    final response = await _apiClient.postJson('/auth/email/resend', const {});
-    return response['message']?.toString() ??
-        'تم إرسال رمز التحقق إلى بريدك الإلكتروني.';
+  // Success calls return nothing: screens confirm with catalog text, as the
+  // server's message is not in the user's language.
+  Future<void> resendVerification() async {
+    await _apiClient.postJson('/auth/email/resend', const {});
   }
 
-  Future<String> forgotPassword({required String email}) async {
-    final response = await _publicClient.postJson('/auth/forgot-password', {
+  Future<void> forgotPassword({required String email}) async {
+    await _publicClient.postJson('/auth/forgot-password', {
       'email': email,
     });
-
-    return response['message']?.toString() ??
-        'تم إرسال رمز استعادة كلمة المرور إذا كان البريد مسجلاً لدينا.';
   }
 
-  Future<String> resetPassword({
+  Future<void> resetPassword({
     required String email,
     required String code,
     required String password,
     required String passwordConfirmation,
   }) async {
-    final response = await _publicClient.postJson('/auth/reset-password', {
+    await _publicClient.postJson('/auth/reset-password', {
       'email': email.trim(),
       'code': code.trim(),
       'password': password,
       'password_confirmation': passwordConfirmation,
     });
-
-    return response['message']?.toString() ??
-        'تم تعيين كلمة المرور الجديدة بنجاح. يمكنك تسجيل الدخول الآن.';
   }
 
   Future<void> logout() async {
@@ -172,17 +188,16 @@ class AuthApiService {
     return user;
   }
 
-  Future<String> changePassword({
+  Future<void> changePassword({
     required String currentPassword,
     required String newPassword,
     required String confirmation,
   }) async {
-    final response = await _apiClient.postJson('/auth/change-password', {
+    await _apiClient.postJson('/auth/change-password', {
       'current_password': currentPassword,
       'password': newPassword,
       'password_confirmation': confirmation,
     });
-    return response['message']?.toString() ?? 'تم تغيير كلمة المرور بنجاح.';
   }
 
   /// Deletes the account after the server verifies [password].
@@ -191,9 +206,23 @@ class AuthApiService {
   /// must leave the session — including push delivery — exactly as it was.
   /// Once the account is gone, every local cleanup step is attempted; any
   /// failures are reported separately from server deletion errors.
-  Future<void> deleteAccount({required String password}) async {
+  ///
+  /// Accounts with a password confirm with it; Google/Apple-only accounts
+  /// confirm with a fresh provider ID token ([provider], [idToken], and
+  /// Apple's raw [nonce]).
+  Future<void> deleteAccount({
+    String? password,
+    String? provider,
+    String? idToken,
+    String? nonce,
+  }) async {
+    assert((password != null) != (provider != null && idToken != null),
+        'confirm with a password or with a provider token, not both');
     await _apiClient.deleteJson('/auth/account', body: {
-      'password': password,
+      if (password != null) 'password': password,
+      if (provider != null) 'provider': provider,
+      if (idToken != null) 'id_token': idToken,
+      if (nonce != null) 'nonce': nonce,
     });
     // No FCM unregister call here: the server already deleted this account's
     // tokens, and calling the API with the now-revoked bearer would 401 and

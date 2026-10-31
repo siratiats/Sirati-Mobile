@@ -1,3 +1,4 @@
+import 'package:sirati/core/l10n/remote_l10n_models.dart';
 import 'package:sirati/shared/models/cv_export_state.dart';
 import 'package:sirati/shared/services/mobile_content_service.dart';
 
@@ -13,7 +14,9 @@ class CvListItem {
     required this.templatePdfUrl,
     required this.updatedAt,
     required this.updatedLabel,
+    this.scoreTotal,
     this.export,
+    this.language,
   });
 
   factory CvListItem.fromJson(Map<String, dynamic> json) {
@@ -29,7 +32,9 @@ class CvListItem {
       templatePdfUrl: _text(json['template_pdf_url']),
       updatedAt: _date(json['updated_at']) ?? _date(json['created_at']),
       updatedLabel: _text(json['updated_label']),
+      scoreTotal: _score(json['score_total']),
       export: CvExportState.fromJson(json['export']),
+      language: _language(json['language']),
     );
   }
 
@@ -47,8 +52,14 @@ class CvListItem {
   /// Server-formatted fallback when no timestamp is present.
   final String updatedLabel;
 
+  /// ATS score 0-100; null when the CV hasn't been scored yet.
+  final int? scoreTotal;
+
   /// Whether the server will export this CV; null from older servers.
   final CvExportState? export;
+
+  /// The CV's own language; null when the server does not send it.
+  final String? language;
 
   /// Stored link to use when the CV can't be re-fetched.
   String get storedPdfUrl =>
@@ -73,7 +84,7 @@ class CvList {
     final raw = data['items'];
     final title = _text(data['title']);
     return CvList(
-      title: title.isNotEmpty ? title : _defaultTitle(english),
+      title: title,
       // Non-object rows are dropped rather than shown as blank cards.
       items: raw is List
           ? [
@@ -86,12 +97,13 @@ class CvList {
   }
 
   /// Shell shown when the list can't be loaded — never invents rows.
-  factory CvList.empty({required bool english}) => CvList(
-        title: _defaultTitle(english),
-        items: const [],
+  factory CvList.empty({required bool english}) => const CvList(
+        title: '',
+        items: [],
         offline: false,
       );
 
+  /// Server title; empty when omitted (the screen shows its catalog label).
   final String title;
   final List<CvListItem> items;
   final bool offline;
@@ -118,9 +130,9 @@ String withTemplateParam(String url, String? templateSlug) {
   }).toString();
 }
 
-String _defaultTitle(bool english) => english ? 'My CVs' : 'سيرتي الذاتية';
-
 String _text(Object? value) => value?.toString().trim() ?? '';
+
+String? _language(Object? value) => normalizeLanguageCode(value);
 
 int? _id(Object? value) {
   final n = switch (value) {
@@ -142,3 +154,13 @@ bool _flag(Object? value, {required bool fallback}) => switch (value) {
 
 DateTime? _date(Object? value) =>
     value == null ? null : DateTime.tryParse(value.toString());
+
+/// A 0-100 score, or null when missing or out of range.
+int? _score(Object? value) {
+  final n = switch (value) {
+    num() => value.round(),
+    String() => num.tryParse(value.trim())?.round(),
+    _ => null,
+  };
+  return n != null && n >= 0 && n <= 100 ? n : null;
+}

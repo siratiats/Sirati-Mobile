@@ -14,16 +14,9 @@ class JobNewsFiltersController extends Notifier<JobNewsFilters> {
   JobNewsFilters build() => const JobNewsFilters();
 
   void setPreset(String preset) => state = state.copyWith(preset: preset);
-  void setCategory(String category) =>
-      state = state.copyWith(category: category);
-  void setCity(String city) => state = state.copyWith(city: city);
+  void setRegion(String region) => state = state.copyWith(region: region);
   void setQuery(String query) => state = state.copyWith(query: query.trim());
   void clear() => state = const JobNewsFilters();
-
-  /// Toggles the "matched to my profile" preset from the profile banner.
-  void toggleMatched() => setPreset(
-        state.preset == 'matched' ? JobNewsFilters.all : 'matched',
-      );
 }
 
 /// Job-news feed for the current filters, keyed by UI language.
@@ -52,9 +45,8 @@ class JobNewsFeedController extends AsyncNotifier<JobNewsFeed> {
 
     final data = await ref.read(mobileContentServiceProvider).jobNews(
           english,
-          category: filters.categoryParam,
           preset: filters.presetParam,
-          city: filters.cityParam,
+          region: filters.regionParam,
           isRemote: filters.isRemote,
           query: filters.query,
           force: force,
@@ -70,4 +62,31 @@ Future<void> refreshJobNews(WidgetRef ref, {required bool english}) async {
     final next = ref.refresh(jobNewsFeedProvider(english).future);
     await next;
   } catch (_) {}
+}
+
+/// Home's "Latest jobs": the unfiltered feed, independent of the Jobs tab's
+/// search and chips, keyed by UI language. Like the Jobs feed, only the
+/// first load may come from cache.
+final homeLatestJobsProvider = AsyncNotifierProvider.autoDispose
+    .family<HomeLatestJobsController, JobNewsFeed, bool>(
+  HomeLatestJobsController.new,
+  // Home shows its own Retry.
+  retry: (_, __) => null,
+);
+
+class HomeLatestJobsController extends AsyncNotifier<JobNewsFeed> {
+  HomeLatestJobsController(this.english);
+
+  final bool english;
+  bool _loadedOnce = false;
+
+  @override
+  Future<JobNewsFeed> build() async {
+    final force = _loadedOnce;
+    _loadedOnce = true;
+    final data = await ref
+        .read(mobileContentServiceProvider)
+        .jobNews(english, force: force);
+    return JobNewsFeed.fromPayload(data, english: english);
+  }
 }

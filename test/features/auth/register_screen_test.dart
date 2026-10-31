@@ -114,9 +114,8 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('no third-party sign-in controls while the flag is off',
+  testWidgets('third-party sign-in follows the flag, Apple always with Google',
       (tester) async {
-    expect(socialSignInEnabled, isFalse);
     tester.view.physicalSize = const Size(1080, 4000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -136,10 +135,14 @@ void main() {
       ));
       await tester.pumpAndSettle();
       final name = screen.runtimeType;
-      expect(find.text('Or continue with'), findsNothing, reason: '$name');
-      expect(find.text('Google'), findsNothing, reason: '$name');
-      expect(find.text('Apple'), findsNothing, reason: '$name');
-      expect(find.byIcon(Icons.apple), findsNothing, reason: '$name');
+      // Both screens offer them, and only while the flag is on.
+      final options = SocialSignInOptions.fromBuild();
+      Matcher shown(bool on) => on ? findsOneWidget : findsNothing;
+      expect(find.text('Or continue with'), shown(options.any),
+          reason: '$name');
+      expect(find.text('Google'), shown(options.google), reason: '$name');
+      expect(find.text('Apple'), shown(options.apple), reason: '$name');
+      expect(find.byIcon(Icons.apple), shown(options.apple), reason: '$name');
     }
   });
 }

@@ -265,6 +265,16 @@ void main() {
     });
   });
 
+  // Placeholder-title rules: test/features/cv_builder/cv_data_safety_test.dart
+  group('Legacy placeholder titles', () {
+    test('a new draft has no stored title', () {
+      for (final language in ['ar', 'en']) {
+        final doc = CvDocument.createEmpty(exportLanguage: language);
+        expect(doc.title, isNull);
+      }
+    });
+  });
+
   group('SIRATI-33 Persistence Layer Invariants', () {
     late Directory tempDir;
 
@@ -322,8 +332,7 @@ void main() {
       expect(storedAfterRead, equals(originalRaw));
     });
 
-    test('M3 deleteCv deletes corrupt non-JSON file without throwing',
-        () async {
+    test('M3 deleteCv keeps a corrupt file until the user confirms', () async {
       final memoryEngine = MemoryCvStorageEngine();
       final repo = LocalCvRepository(engine: memoryEngine);
 
@@ -332,8 +341,10 @@ void main() {
 
       expect(await memoryEngine.exists(corruptId), isTrue);
 
-      // Attempting to delete must succeed and purge from engine
-      await repo.deleteCv(corruptId);
+      await expectLater(
+          repo.deleteCv(corruptId), throwsA(isA<UnreadableCvException>()));
+      expect(await memoryEngine.exists(corruptId), isTrue);
+      await repo.deleteCv(corruptId, confirmUnreadable: true);
       expect(await memoryEngine.exists(corruptId), isFalse);
     });
   });

@@ -4,6 +4,8 @@
 /// PDF templates, and Flutter editors share one typed shape.
 library cv_document;
 
+import 'package:sirati/core/utils/app_locale.dart';
+
 class LocalizedText {
   final String ar;
   final String en;
@@ -12,7 +14,7 @@ class LocalizedText {
 
   factory LocalizedText.fromJson(dynamic json, {String? defaultLanguage}) {
     if (json is String) {
-      return defaultLanguage == 'en'
+      return defaultLanguage != null && AppLocale.isEnglishCode(defaultLanguage)
           ? LocalizedText(en: json)
           : LocalizedText(ar: json);
     }
@@ -25,10 +27,12 @@ class LocalizedText {
     return const LocalizedText();
   }
 
+  /// Text in [language]'s content language (see [AppLocale.baseLanguageOf]).
   String resolve(String language, {bool fallback = true}) {
-    final primary = language == 'en' ? en : ar;
+    final english = AppLocale.isEnglishCode(language);
+    final primary = english ? en : ar;
     if (primary.isNotEmpty || !fallback) return primary;
-    return language == 'en' ? ar : en;
+    return english ? ar : en;
   }
 
   bool get isEmpty => ar.isEmpty && en.isEmpty;
@@ -736,6 +740,11 @@ class CustomSection {
 class CvDocument {
   static const schemaVersion = 1;
 
+  /// Written by the local repository on every save: this build never
+  /// writes a default title, so any stored title is the user's (see
+  /// CvSchemaMigrator). Not part of the document itself.
+  static const noDefaultTitleKey = 'no_default_title';
+
   final String? id;
   final String? title;
   final DateTime? createdAt;
@@ -806,7 +815,8 @@ class CvDocument {
     final now = DateTime.now();
     return CvDocument(
       id: id ?? generateId(),
-      title: title ?? (exportLanguage == 'ar' ? 'سيرة ذاتية جديدة' : 'New CV'),
+      // No title until the user names it: the editor shows a catalog label.
+      title: title,
       createdAt: now,
       updatedAt: now,
       exportLanguage: exportLanguage,
@@ -840,7 +850,7 @@ class CvDocument {
     String? linkedin,
     LocalizedText? location,
   }) {
-    final lang = json['export_language']?.toString() == 'en' ? 'en' : 'ar';
+    final lang = AppLocale.contentLanguageOf(json['export_language']);
     final personalMap = json['personal'] is Map<String, dynamic>
         ? json['personal'] as Map<String, dynamic>
         : <String, dynamic>{};
@@ -913,6 +923,7 @@ class CvDocument {
       'custom_sections',
       'section_order',
       'missing_translations',
+      noDefaultTitleKey,
     };
     final extra = <String, dynamic>{};
     for (final entry in json.entries) {

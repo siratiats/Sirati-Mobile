@@ -1850,6 +1850,15 @@ class RemoteAppLocalizations extends AppLocalizations {
   String get cvHubShare => remote.text('cvHubShare') ?? _base.cvHubShare;
 
   @override
+  String get cvShareSubscriptionRequired =>
+      remote.text('cvShareSubscriptionRequired') ??
+      _base.cvShareSubscriptionRequired;
+
+  @override
+  String get cvShareFailed =>
+      remote.text('cvShareFailed') ?? _base.cvShareFailed;
+
+  @override
   String get cvHubNextSteps =>
       remote.text('cvHubNextSteps') ?? _base.cvHubNextSteps;
 
@@ -2142,6 +2151,38 @@ class RemoteAppLocalizations extends AppLocalizations {
       _base.sharedOfflineShowingSaved;
 
   @override
+  String get sharedOfflineTitle =>
+      remote.text('sharedOfflineTitle') ?? _base.sharedOfflineTitle;
+
+  @override
+  String get sharedOfflineBody =>
+      remote.text('sharedOfflineBody') ?? _base.sharedOfflineBody;
+
+  @override
+  String get sharedOfflineWaiting =>
+      remote.text('sharedOfflineWaiting') ?? _base.sharedOfflineWaiting;
+
+  @override
+  String get sharedOfflineChecking =>
+      remote.text('sharedOfflineChecking') ?? _base.sharedOfflineChecking;
+
+  @override
+  String get sharedOfflineTipsTitle =>
+      remote.text('sharedOfflineTipsTitle') ?? _base.sharedOfflineTipsTitle;
+
+  @override
+  String get sharedOfflineTipAirplane =>
+      remote.text('sharedOfflineTipAirplane') ?? _base.sharedOfflineTipAirplane;
+
+  @override
+  String get sharedOfflineTipSignal =>
+      remote.text('sharedOfflineTipSignal') ?? _base.sharedOfflineTipSignal;
+
+  @override
+  String get sharedOfflineOpenSaved =>
+      remote.text('sharedOfflineOpenSaved') ?? _base.sharedOfflineOpenSaved;
+
+  @override
   String get sharedNoDataAvailable =>
       remote.text('sharedNoDataAvailable') ?? _base.sharedNoDataAvailable;
 
@@ -2235,6 +2276,18 @@ class RemoteAppLocalizations extends AppLocalizations {
   @override
   String get sharedJobTitleNoMatches =>
       remote.text('sharedJobTitleNoMatches') ?? _base.sharedJobTitleNoMatches;
+
+  @override
+  String sharedJobTitleEnterManually(String query) =>
+      remote.format(
+        'sharedJobTitleEnterManually',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'query': query},
+        ),
+      ) ??
+      _base.sharedJobTitleEnterManually(query);
 
   @override
   String get sharedNotifications =>
@@ -3420,6 +3473,35 @@ class RemoteAppLocalizations extends AppLocalizations {
       remote.text('authSessionExpired') ?? _base.authSessionExpired;
 
   @override
+  String get authSessionExpiredBadge =>
+      remote.text('authSessionExpiredBadge') ?? _base.authSessionExpiredBadge;
+
+  @override
+  String get authSessionExpiredChip =>
+      remote.text('authSessionExpiredChip') ?? _base.authSessionExpiredChip;
+
+  @override
+  String get authSessionExpiredTitle =>
+      remote.text('authSessionExpiredTitle') ?? _base.authSessionExpiredTitle;
+
+  @override
+  String get authSessionExpiredBody =>
+      remote.text('authSessionExpiredBody') ?? _base.authSessionExpiredBody;
+
+  @override
+  String get authSessionExpiredDataSafe =>
+      remote.text('authSessionExpiredDataSafe') ??
+      _base.authSessionExpiredDataSafe;
+
+  @override
+  String get authSessionExpiredSignIn =>
+      remote.text('authSessionExpiredSignIn') ?? _base.authSessionExpiredSignIn;
+
+  @override
+  String get authSessionExpiredHelp =>
+      remote.text('authSessionExpiredHelp') ?? _base.authSessionExpiredHelp;
+
+  @override
   String get authLoginUnexpectedError =>
       remote.text('authLoginUnexpectedError') ?? _base.authLoginUnexpectedError;
 
@@ -3434,6 +3516,18 @@ class RemoteAppLocalizations extends AppLocalizations {
         ),
       ) ??
       _base.authSocialSignInSoon(provider);
+
+  @override
+  String authSocialSignInNotConfigured(String provider) =>
+      remote.format(
+        'authSocialSignInNotConfigured',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'provider': provider},
+        ),
+      ) ??
+      _base.authSocialSignInNotConfigured(provider);
 
   @override
   String get authLoginSubtitle =>
@@ -3795,6 +3889,35 @@ class RemoteAppLocalizations extends AppLocalizations {
       _base.settingsDeleteConfirmWithPassword;
 
   @override
+  String get settingsDeleteConfirmWithProvider =>
+      remote.text('settingsDeleteConfirmWithProvider') ??
+      _base.settingsDeleteConfirmWithProvider;
+
+  @override
+  String settingsDeleteWithProvider(String provider) =>
+      remote.format(
+        'settingsDeleteWithProvider',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'provider': provider},
+        ),
+      ) ??
+      _base.settingsDeleteWithProvider(provider);
+
+  @override
+  String settingsDeleteProviderMismatch(String provider) =>
+      remote.format(
+        'settingsDeleteProviderMismatch',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'provider': provider},
+        ),
+      ) ??
+      _base.settingsDeleteProviderMismatch(provider);
+
+  @override
   String get settingsDeletePasswordRequired =>
       remote.text('settingsDeletePasswordRequired') ??
       _base.settingsDeletePasswordRequired;
@@ -3977,22 +4100,6 @@ class RemoteAppLocalizations extends AppLocalizations {
       remote.text('jobsCityMedina') ?? _base.jobsCityMedina;
 
   @override
-  String get jobsPersonalizedTitle =>
-      remote.text('jobsPersonalizedTitle') ?? _base.jobsPersonalizedTitle;
-
-  @override
-  String get jobsPersonalizedFallback =>
-      remote.text('jobsPersonalizedFallback') ?? _base.jobsPersonalizedFallback;
-
-  @override
-  String get jobsMatchedActive =>
-      remote.text('jobsMatchedActive') ?? _base.jobsMatchedActive;
-
-  @override
-  String get jobsMatchToggle =>
-      remote.text('jobsMatchToggle') ?? _base.jobsMatchToggle;
-
-  @override
   String get jobsEmptyFeed =>
       remote.text('jobsEmptyFeed') ?? _base.jobsEmptyFeed;
 
@@ -4015,10 +4122,6 @@ class RemoteAppLocalizations extends AppLocalizations {
   @override
   String get jobsTamheerProgram =>
       remote.text('jobsTamheerProgram') ?? _base.jobsTamheerProgram;
-
-  @override
-  String get jobsCompatibilityTitle =>
-      remote.text('jobsCompatibilityTitle') ?? _base.jobsCompatibilityTitle;
 
   @override
   String get jobsSkillsRequired =>
@@ -4284,18 +4387,6 @@ class RemoteAppLocalizations extends AppLocalizations {
   String get atsBandWeak => remote.text('atsBandWeak') ?? _base.atsBandWeak;
 
   @override
-  String jobsMatchScore(int score) =>
-      remote.format(
-        'jobsMatchScore',
-        (icuMessage, icuLocale) => IcuLite.format(
-          icuMessage,
-          locale: icuLocale,
-          args: {'score': score},
-        ),
-      ) ??
-      _base.jobsMatchScore(score);
-
-  @override
   String atsBenchmark(String category) =>
       remote.format(
         'atsBenchmark',
@@ -4306,6 +4397,2041 @@ class RemoteAppLocalizations extends AppLocalizations {
         ),
       ) ??
       _base.atsBenchmark(category);
+
+  @override
+  String get atsCategoryGeneral =>
+      remote.text('atsCategoryGeneral') ?? _base.atsCategoryGeneral;
+
+  @override
+  String atsHiddenMore(int count) =>
+      remote.format(
+        'atsHiddenMore',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.atsHiddenMore(count);
+
+  @override
+  String get myCvsHeaderSubtitle =>
+      remote.text('myCvsHeaderSubtitle') ?? _base.myCvsHeaderSubtitle;
+
+  @override
+  String get myCvsToolsTitle =>
+      remote.text('myCvsToolsTitle') ?? _base.myCvsToolsTitle;
+
+  @override
+  String get myCvsToolCreateTitle =>
+      remote.text('myCvsToolCreateTitle') ?? _base.myCvsToolCreateTitle;
+
+  @override
+  String get myCvsToolCreateBody =>
+      remote.text('myCvsToolCreateBody') ?? _base.myCvsToolCreateBody;
+
+  @override
+  String get myCvsToolScanTitle =>
+      remote.text('myCvsToolScanTitle') ?? _base.myCvsToolScanTitle;
+
+  @override
+  String get myCvsToolScanBody =>
+      remote.text('myCvsToolScanBody') ?? _base.myCvsToolScanBody;
+
+  @override
+  String get myCvsToolUploadTitle =>
+      remote.text('myCvsToolUploadTitle') ?? _base.myCvsToolUploadTitle;
+
+  @override
+  String get myCvsToolUploadBody =>
+      remote.text('myCvsToolUploadBody') ?? _base.myCvsToolUploadBody;
+
+  @override
+  String get myCvsToolTargetTitle =>
+      remote.text('myCvsToolTargetTitle') ?? _base.myCvsToolTargetTitle;
+
+  @override
+  String get myCvsToolTargetBody =>
+      remote.text('myCvsToolTargetBody') ?? _base.myCvsToolTargetBody;
+
+  @override
+  String get myCvsListTitle =>
+      remote.text('myCvsListTitle') ?? _base.myCvsListTitle;
+
+  @override
+  String get myCvsEmptyBody =>
+      remote.text('myCvsEmptyBody') ?? _base.myCvsEmptyBody;
+
+  @override
+  String get myCvsEmptyCreate =>
+      remote.text('myCvsEmptyCreate') ?? _base.myCvsEmptyCreate;
+
+  @override
+  String get myCvsEmptyUpload =>
+      remote.text('myCvsEmptyUpload') ?? _base.myCvsEmptyUpload;
+
+  @override
+  String get cvCardOpen => remote.text('cvCardOpen') ?? _base.cvCardOpen;
+
+  @override
+  String get cvCardMore => remote.text('cvCardMore') ?? _base.cvCardMore;
+
+  @override
+  String cvCardScore(int score) =>
+      remote.format(
+        'cvCardScore',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'score': score},
+        ),
+      ) ??
+      _base.cvCardScore(score);
+
+  @override
+  String get cvCardNotScanned =>
+      remote.text('cvCardNotScanned') ?? _base.cvCardNotScanned;
+
+  @override
+  String get cvCardScanNow =>
+      remote.text('cvCardScanNow') ?? _base.cvCardScanNow;
+
+  @override
+  String get cvCardNeedsWork =>
+      remote.text('cvCardNeedsWork') ?? _base.cvCardNeedsWork;
+
+  @override
+  String get settingsNotificationsFilterAll =>
+      remote.text('settingsNotificationsFilterAll') ??
+      _base.settingsNotificationsFilterAll;
+
+  @override
+  String get settingsNotificationsCategoryCv =>
+      remote.text('settingsNotificationsCategoryCv') ??
+      _base.settingsNotificationsCategoryCv;
+
+  @override
+  String get settingsNotificationsCategoryJobs =>
+      remote.text('settingsNotificationsCategoryJobs') ??
+      _base.settingsNotificationsCategoryJobs;
+
+  @override
+  String get settingsNotificationsCategoryAnalysis =>
+      remote.text('settingsNotificationsCategoryAnalysis') ??
+      _base.settingsNotificationsCategoryAnalysis;
+
+  @override
+  String get settingsNotificationsCategoryLearning =>
+      remote.text('settingsNotificationsCategoryLearning') ??
+      _base.settingsNotificationsCategoryLearning;
+
+  @override
+  String get settingsNotificationsCategoryGeneral =>
+      remote.text('settingsNotificationsCategoryGeneral') ??
+      _base.settingsNotificationsCategoryGeneral;
+
+  @override
+  String get settingsNotificationsToday =>
+      remote.text('settingsNotificationsToday') ??
+      _base.settingsNotificationsToday;
+
+  @override
+  String get settingsNotificationsYesterday =>
+      remote.text('settingsNotificationsYesterday') ??
+      _base.settingsNotificationsYesterday;
+
+  @override
+  String get settingsNotificationsThisWeek =>
+      remote.text('settingsNotificationsThisWeek') ??
+      _base.settingsNotificationsThisWeek;
+
+  @override
+  String get settingsNotificationsEarlier =>
+      remote.text('settingsNotificationsEarlier') ??
+      _base.settingsNotificationsEarlier;
+
+  @override
+  String settingsNotificationsNewCount(int count) =>
+      remote.format(
+        'settingsNotificationsNewCount',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.settingsNotificationsNewCount(count);
+
+  @override
+  String settingsNotificationsCount(int count) =>
+      remote.format(
+        'settingsNotificationsCount',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.settingsNotificationsCount(count);
+
+  @override
+  String get settingsNotificationsViewCv =>
+      remote.text('settingsNotificationsViewCv') ??
+      _base.settingsNotificationsViewCv;
+
+  @override
+  String get settingsNotificationsScanCta =>
+      remote.text('settingsNotificationsScanCta') ??
+      _base.settingsNotificationsScanCta;
+
+  @override
+  String get settingsNotificationsFilterEmpty =>
+      remote.text('settingsNotificationsFilterEmpty') ??
+      _base.settingsNotificationsFilterEmpty;
+
+  @override
+  String get settingsNotificationsPreviewTitle =>
+      remote.text('settingsNotificationsPreviewTitle') ??
+      _base.settingsNotificationsPreviewTitle;
+
+  @override
+  String get settingsNotificationsPreviewCvTitle =>
+      remote.text('settingsNotificationsPreviewCvTitle') ??
+      _base.settingsNotificationsPreviewCvTitle;
+
+  @override
+  String get settingsNotificationsPreviewCvBody =>
+      remote.text('settingsNotificationsPreviewCvBody') ??
+      _base.settingsNotificationsPreviewCvBody;
+
+  @override
+  String get settingsNotificationsPreviewJobsTitle =>
+      remote.text('settingsNotificationsPreviewJobsTitle') ??
+      _base.settingsNotificationsPreviewJobsTitle;
+
+  @override
+  String get settingsNotificationsPreviewJobsBody =>
+      remote.text('settingsNotificationsPreviewJobsBody') ??
+      _base.settingsNotificationsPreviewJobsBody;
+
+  @override
+  String get settingsNotificationsPreviewAnalysisTitle =>
+      remote.text('settingsNotificationsPreviewAnalysisTitle') ??
+      _base.settingsNotificationsPreviewAnalysisTitle;
+
+  @override
+  String get settingsNotificationsPreviewAnalysisBody =>
+      remote.text('settingsNotificationsPreviewAnalysisBody') ??
+      _base.settingsNotificationsPreviewAnalysisBody;
+
+  @override
+  String get settingsNotificationsCreateCvCta =>
+      remote.text('settingsNotificationsCreateCvCta') ??
+      _base.settingsNotificationsCreateCvCta;
+
+  @override
+  String get authSignInRequiredTitle =>
+      remote.text('authSignInRequiredTitle') ?? _base.authSignInRequiredTitle;
+
+  @override
+  String get authSignInRequiredSubtitle =>
+      remote.text('authSignInRequiredSubtitle') ??
+      _base.authSignInRequiredSubtitle;
+
+  @override
+  String get authSignInRequiredCardTitle =>
+      remote.text('authSignInRequiredCardTitle') ??
+      _base.authSignInRequiredCardTitle;
+
+  @override
+  String get authSignInRequiredBody =>
+      remote.text('authSignInRequiredBody') ?? _base.authSignInRequiredBody;
+
+  @override
+  String get authSignInRequiredBrowseJobs =>
+      remote.text('authSignInRequiredBrowseJobs') ??
+      _base.authSignInRequiredBrowseJobs;
+
+  @override
+  String get jobsRegionAll =>
+      remote.text('jobsRegionAll') ?? _base.jobsRegionAll;
+
+  @override
+  String get jobsRegionCentral =>
+      remote.text('jobsRegionCentral') ?? _base.jobsRegionCentral;
+
+  @override
+  String get jobsRegionEastern =>
+      remote.text('jobsRegionEastern') ?? _base.jobsRegionEastern;
+
+  @override
+  String get jobsRegionWestern =>
+      remote.text('jobsRegionWestern') ?? _base.jobsRegionWestern;
+
+  @override
+  String get jobsRegionNorthern =>
+      remote.text('jobsRegionNorthern') ?? _base.jobsRegionNorthern;
+
+  @override
+  String get jobsRegionSouthern =>
+      remote.text('jobsRegionSouthern') ?? _base.jobsRegionSouthern;
+
+  @override
+  String jobsEmptyRegionTitle(String region) =>
+      remote.format(
+        'jobsEmptyRegionTitle',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'region': region},
+        ),
+      ) ??
+      _base.jobsEmptyRegionTitle(region);
+
+  @override
+  String get jobsEmptyRegionBody =>
+      remote.text('jobsEmptyRegionBody') ?? _base.jobsEmptyRegionBody;
+
+  @override
+  String get jobsShowAllRegions =>
+      remote.text('jobsShowAllRegions') ?? _base.jobsShowAllRegions;
+
+  @override
+  String get jobsMatchedNeedsTitle =>
+      remote.text('jobsMatchedNeedsTitle') ?? _base.jobsMatchedNeedsTitle;
+
+  @override
+  String get jobsMatchedSetTitle =>
+      remote.text('jobsMatchedSetTitle') ?? _base.jobsMatchedSetTitle;
+
+  @override
+  String jobsMatchedBasedOn(String title) =>
+      remote.format(
+        'jobsMatchedBasedOn',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'title': title},
+        ),
+      ) ??
+      _base.jobsMatchedBasedOn(title);
+
+  @override
+  String get jobsHowToApply =>
+      remote.text('jobsHowToApply') ?? _base.jobsHowToApply;
+
+  @override
+  String jobsApplyOpensHost(String host) =>
+      remote.format(
+        'jobsApplyOpensHost',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'host': host},
+        ),
+      ) ??
+      _base.jobsApplyOpensHost(host);
+
+  @override
+  String get jobsApplyByEmail =>
+      remote.text('jobsApplyByEmail') ?? _base.jobsApplyByEmail;
+
+  @override
+  String get jobsApplyEmailHint =>
+      remote.text('jobsApplyEmailHint') ?? _base.jobsApplyEmailHint;
+
+  @override
+  String get jobsCopyEmail =>
+      remote.text('jobsCopyEmail') ?? _base.jobsCopyEmail;
+
+  @override
+  String get jobsEmailCopied =>
+      remote.text('jobsEmailCopied') ?? _base.jobsEmailCopied;
+
+  @override
+  String get jobsOpenEmailFailed =>
+      remote.text('jobsOpenEmailFailed') ?? _base.jobsOpenEmailFailed;
+
+  @override
+  String get jobsNoDirectApply =>
+      remote.text('jobsNoDirectApply') ?? _base.jobsNoDirectApply;
+
+  @override
+  String get jobsNoDirectApplyHint =>
+      remote.text('jobsNoDirectApplyHint') ?? _base.jobsNoDirectApplyHint;
+
+  @override
+  String get jobsApplyMethodLink =>
+      remote.text('jobsApplyMethodLink') ?? _base.jobsApplyMethodLink;
+
+  @override
+  String get jobsApplyMethodEmail =>
+      remote.text('jobsApplyMethodEmail') ?? _base.jobsApplyMethodEmail;
+
+  @override
+  String jobsSourceName(String source) =>
+      remote.format(
+        'jobsSourceName',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'source': source},
+        ),
+      ) ??
+      _base.jobsSourceName(source);
+
+  @override
+  String get jobsViewSourcePost =>
+      remote.text('jobsViewSourcePost') ?? _base.jobsViewSourcePost;
+
+  @override
+  String get jobsShare => remote.text('jobsShare') ?? _base.jobsShare;
+
+  @override
+  String get jobsRemoteChip =>
+      remote.text('jobsRemoteChip') ?? _base.jobsRemoteChip;
+
+  @override
+  String get homeProfileSubtitle =>
+      remote.text('homeProfileSubtitle') ?? _base.homeProfileSubtitle;
+
+  @override
+  String get homeProfileOpen =>
+      remote.text('homeProfileOpen') ?? _base.homeProfileOpen;
+
+  @override
+  String get homeStartCreateTitle =>
+      remote.text('homeStartCreateTitle') ?? _base.homeStartCreateTitle;
+
+  @override
+  String get homeStartCreateBody =>
+      remote.text('homeStartCreateBody') ?? _base.homeStartCreateBody;
+
+  @override
+  String get homeStartAtsTitle =>
+      remote.text('homeStartAtsTitle') ?? _base.homeStartAtsTitle;
+
+  @override
+  String get homeStartAtsBody =>
+      remote.text('homeStartAtsBody') ?? _base.homeStartAtsBody;
+
+  @override
+  String get homeServiceUpload =>
+      remote.text('homeServiceUpload') ?? _base.homeServiceUpload;
+
+  @override
+  String get homeServiceTarget =>
+      remote.text('homeServiceTarget') ?? _base.homeServiceTarget;
+
+  @override
+  String get homeServiceEducation =>
+      remote.text('homeServiceEducation') ?? _base.homeServiceEducation;
+
+  @override
+  String get homeSoon => remote.text('homeSoon') ?? _base.homeSoon;
+
+  @override
+  String homeServiceSoonA11y(String service) =>
+      remote.format(
+        'homeServiceSoonA11y',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'service': service},
+        ),
+      ) ??
+      _base.homeServiceSoonA11y(service);
+
+  @override
+  String get homeMyCvTitle =>
+      remote.text('homeMyCvTitle') ?? _base.homeMyCvTitle;
+
+  @override
+  String homeMyCvEdited(String time) =>
+      remote.format(
+        'homeMyCvEdited',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'time': time},
+        ),
+      ) ??
+      _base.homeMyCvEdited(time);
+
+  @override
+  String get homeMyCvEdit => remote.text('homeMyCvEdit') ?? _base.homeMyCvEdit;
+
+  @override
+  String get homeMyCvCheck =>
+      remote.text('homeMyCvCheck') ?? _base.homeMyCvCheck;
+
+  @override
+  String get homeMyCvEmptyTitle =>
+      remote.text('homeMyCvEmptyTitle') ?? _base.homeMyCvEmptyTitle;
+
+  @override
+  String get homeMyCvEmptyBody =>
+      remote.text('homeMyCvEmptyBody') ?? _base.homeMyCvEmptyBody;
+
+  @override
+  String get homeHonesty => remote.text('homeHonesty') ?? _base.homeHonesty;
+
+  @override
+  String get authEmailHint =>
+      remote.text('authEmailHint') ?? _base.authEmailHint;
+
+  @override
+  String get authPhoneHint =>
+      remote.text('authPhoneHint') ?? _base.authPhoneHint;
+
+  @override
+  String get cvPersonalEmailHint =>
+      remote.text('cvPersonalEmailHint') ?? _base.cvPersonalEmailHint;
+
+  @override
+  String get cvPersonalPhoneHint =>
+      remote.text('cvPersonalPhoneHint') ?? _base.cvPersonalPhoneHint;
+
+  @override
+  String get cvPersonalLinkedinHint =>
+      remote.text('cvPersonalLinkedinHint') ?? _base.cvPersonalLinkedinHint;
+
+  @override
+  String get authSocialGoogle =>
+      remote.text('authSocialGoogle') ?? _base.authSocialGoogle;
+
+  @override
+  String get authSocialApple =>
+      remote.text('authSocialApple') ?? _base.authSocialApple;
+
+  @override
+  String get authRegisterEmailHint =>
+      remote.text('authRegisterEmailHint') ?? _base.authRegisterEmailHint;
+
+  @override
+  String get timeJustNow => remote.text('timeJustNow') ?? _base.timeJustNow;
+
+  @override
+  String timeMinutesAgo(int count) =>
+      remote.format(
+        'timeMinutesAgo',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.timeMinutesAgo(count);
+
+  @override
+  String timeHoursAgo(int count) =>
+      remote.format(
+        'timeHoursAgo',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.timeHoursAgo(count);
+
+  @override
+  String get timeYesterday =>
+      remote.text('timeYesterday') ?? _base.timeYesterday;
+
+  @override
+  String get savedJustNow => remote.text('savedJustNow') ?? _base.savedJustNow;
+
+  @override
+  String savedAgo(String time) =>
+      remote.format(
+        'savedAgo',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'time': time},
+        ),
+      ) ??
+      _base.savedAgo(time);
+
+  @override
+  String get untitledTitle =>
+      remote.text('untitledTitle') ?? _base.untitledTitle;
+
+  @override
+  String get aiErrorTooLong =>
+      remote.text('aiErrorTooLong') ?? _base.aiErrorTooLong;
+
+  @override
+  String get aiErrorTryAgain =>
+      remote.text('aiErrorTryAgain') ?? _base.aiErrorTryAgain;
+
+  @override
+  String aiGenerationFailed(String detail) =>
+      remote.format(
+        'aiGenerationFailed',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'detail': detail},
+        ),
+      ) ??
+      _base.aiGenerationFailed(detail);
+
+  @override
+  String aiSuggestionsFailed(String detail) =>
+      remote.format(
+        'aiSuggestionsFailed',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'detail': detail},
+        ),
+      ) ??
+      _base.aiSuggestionsFailed(detail);
+
+  @override
+  String aiLocalFallback(String detail) =>
+      remote.format(
+        'aiLocalFallback',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'detail': detail},
+        ),
+      ) ??
+      _base.aiLocalFallback(detail);
+
+  @override
+  String get jobNewsTitle => remote.text('jobNewsTitle') ?? _base.jobNewsTitle;
+
+  @override
+  String get crashMessage => remote.text('crashMessage') ?? _base.crashMessage;
+
+  @override
+  String get avatarFallbackInitial =>
+      remote.text('avatarFallbackInitial') ?? _base.avatarFallbackInitial;
+
+  @override
+  String get coreApiErrorBadResponse =>
+      remote.text('coreApiErrorBadResponse') ?? _base.coreApiErrorBadResponse;
+
+  @override
+  String get coreApiErrorEmptyResponse =>
+      remote.text('coreApiErrorEmptyResponse') ??
+      _base.coreApiErrorEmptyResponse;
+
+  @override
+  String get coreApiErrorUnexpected =>
+      remote.text('coreApiErrorUnexpected') ?? _base.coreApiErrorUnexpected;
+
+  @override
+  String get coreApiErrorRequestFailed =>
+      remote.text('coreApiErrorRequestFailed') ??
+      _base.coreApiErrorRequestFailed;
+
+  @override
+  String coreApiErrorStatus(int code) =>
+      remote.format(
+        'coreApiErrorStatus',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'code': code},
+        ),
+      ) ??
+      _base.coreApiErrorStatus(code);
+
+  @override
+  String get authVerifyCodeResent =>
+      remote.text('authVerifyCodeResent') ?? _base.authVerifyCodeResent;
+
+  @override
+  String get authForgotCodeSent =>
+      remote.text('authForgotCodeSent') ?? _base.authForgotCodeSent;
+
+  @override
+  String get authForgotPasswordReset =>
+      remote.text('authForgotPasswordReset') ?? _base.authForgotPasswordReset;
+
+  @override
+  String get serverDashboardStatusActive =>
+      remote.text('serverDashboardStatusActive') ??
+      _base.serverDashboardStatusActive;
+
+  @override
+  String get serverDashboardCreateCvTitle =>
+      remote.text('serverDashboardCreateCvTitle') ??
+      _base.serverDashboardCreateCvTitle;
+
+  @override
+  String get serverDashboardCreateCvSubtitle =>
+      remote.text('serverDashboardCreateCvSubtitle') ??
+      _base.serverDashboardCreateCvSubtitle;
+
+  @override
+  String get serverDashboardCreateCvButton =>
+      remote.text('serverDashboardCreateCvButton') ??
+      _base.serverDashboardCreateCvButton;
+
+  @override
+  String get serverDashboardAnalyzeTitle =>
+      remote.text('serverDashboardAnalyzeTitle') ??
+      _base.serverDashboardAnalyzeTitle;
+
+  @override
+  String get serverDashboardAnalyzeSubtitle =>
+      remote.text('serverDashboardAnalyzeSubtitle') ??
+      _base.serverDashboardAnalyzeSubtitle;
+
+  @override
+  String get serverDashboardAnalyzeButton =>
+      remote.text('serverDashboardAnalyzeButton') ??
+      _base.serverDashboardAnalyzeButton;
+
+  @override
+  String get serverMyCvsTitle =>
+      remote.text('serverMyCvsTitle') ?? _base.serverMyCvsTitle;
+
+  @override
+  String serverMyCvsSummary(int count) =>
+      remote.format(
+        'serverMyCvsSummary',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.serverMyCvsSummary(count);
+
+  @override
+  String serverMyCvsUpdated(String date) =>
+      remote.format(
+        'serverMyCvsUpdated',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'date': date},
+        ),
+      ) ??
+      _base.serverMyCvsUpdated(date);
+
+  @override
+  String get serverMyCvsUpdatedUnknown =>
+      remote.text('serverMyCvsUpdatedUnknown') ??
+      _base.serverMyCvsUpdatedUnknown;
+
+  @override
+  String serverMyCvsTailoredTitle(String title) =>
+      remote.format(
+        'serverMyCvsTailoredTitle',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'title': title},
+        ),
+      ) ??
+      _base.serverMyCvsTailoredTitle(title);
+
+  @override
+  String get serverCvTemplatesTitle =>
+      remote.text('serverCvTemplatesTitle') ?? _base.serverCvTemplatesTitle;
+
+  @override
+  String get serverCvTemplatesSubtitle =>
+      remote.text('serverCvTemplatesSubtitle') ??
+      _base.serverCvTemplatesSubtitle;
+
+  @override
+  String get serverEducationTitle =>
+      remote.text('serverEducationTitle') ?? _base.serverEducationTitle;
+
+  @override
+  String get serverEducationSubtitle =>
+      remote.text('serverEducationSubtitle') ?? _base.serverEducationSubtitle;
+
+  @override
+  String get serverEducationTargetLabel =>
+      remote.text('serverEducationTargetLabel') ??
+      _base.serverEducationTargetLabel;
+
+  @override
+  String get serverEducationTabNews =>
+      remote.text('serverEducationTabNews') ?? _base.serverEducationTabNews;
+
+  @override
+  String get serverEducationTabCertificates =>
+      remote.text('serverEducationTabCertificates') ??
+      _base.serverEducationTabCertificates;
+
+  @override
+  String get serverEducationTabStudy =>
+      remote.text('serverEducationTabStudy') ?? _base.serverEducationTabStudy;
+
+  @override
+  String get serverEducationStartLearning =>
+      remote.text('serverEducationStartLearning') ??
+      _base.serverEducationStartLearning;
+
+  @override
+  String get serverJobsTitle =>
+      remote.text('serverJobsTitle') ?? _base.serverJobsTitle;
+
+  @override
+  String get serverJobsSubtitle =>
+      remote.text('serverJobsSubtitle') ?? _base.serverJobsSubtitle;
+
+  @override
+  String serverJobsApplyBy(String date) =>
+      remote.format(
+        'serverJobsApplyBy',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'date': date},
+        ),
+      ) ??
+      _base.serverJobsApplyBy(date);
+
+  @override
+  String get serverJobsSourceGovLabel =>
+      remote.text('serverJobsSourceGovLabel') ?? _base.serverJobsSourceGovLabel;
+
+  @override
+  String get serverJobsSourceGovBadge =>
+      remote.text('serverJobsSourceGovBadge') ?? _base.serverJobsSourceGovBadge;
+
+  @override
+  String get serverJobsSourceCompanyLabel =>
+      remote.text('serverJobsSourceCompanyLabel') ??
+      _base.serverJobsSourceCompanyLabel;
+
+  @override
+  String get serverJobsSourceCompanyBadge =>
+      remote.text('serverJobsSourceCompanyBadge') ??
+      _base.serverJobsSourceCompanyBadge;
+
+  @override
+  String get serverJobsSourceTamheerLabel =>
+      remote.text('serverJobsSourceTamheerLabel') ??
+      _base.serverJobsSourceTamheerLabel;
+
+  @override
+  String get serverJobsSourceTamheerBadge =>
+      remote.text('serverJobsSourceTamheerBadge') ??
+      _base.serverJobsSourceTamheerBadge;
+
+  @override
+  String get serverJobsSourceStartupLabel =>
+      remote.text('serverJobsSourceStartupLabel') ??
+      _base.serverJobsSourceStartupLabel;
+
+  @override
+  String get serverJobsSourceStartupBadge =>
+      remote.text('serverJobsSourceStartupBadge') ??
+      _base.serverJobsSourceStartupBadge;
+
+  @override
+  String serverJobsSalaryRange(String min, String max, String currency) =>
+      remote.format(
+        'serverJobsSalaryRange',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'min': min, 'max': max, 'currency': currency},
+        ),
+      ) ??
+      _base.serverJobsSalaryRange(min, max, currency);
+
+  @override
+  String serverJobsSalaryFrom(String min, String currency) =>
+      remote.format(
+        'serverJobsSalaryFrom',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'min': min, 'currency': currency},
+        ),
+      ) ??
+      _base.serverJobsSalaryFrom(min, currency);
+
+  @override
+  String serverJobsSalaryUpTo(String max, String currency) =>
+      remote.format(
+        'serverJobsSalaryUpTo',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'max': max, 'currency': currency},
+        ),
+      ) ??
+      _base.serverJobsSalaryUpTo(max, currency);
+
+  @override
+  String get serverJobsCurrencySar =>
+      remote.text('serverJobsCurrencySar') ?? _base.serverJobsCurrencySar;
+
+  @override
+  String get serverNotificationsAllRead =>
+      remote.text('serverNotificationsAllRead') ??
+      _base.serverNotificationsAllRead;
+
+  @override
+  String get serverNotificationsPreferencesUpdated =>
+      remote.text('serverNotificationsPreferencesUpdated') ??
+      _base.serverNotificationsPreferencesUpdated;
+
+  @override
+  String get serverNotificationsOpenRecorded =>
+      remote.text('serverNotificationsOpenRecorded') ??
+      _base.serverNotificationsOpenRecorded;
+
+  @override
+  String get serverNotificationsActivityRecorded =>
+      remote.text('serverNotificationsActivityRecorded') ??
+      _base.serverNotificationsActivityRecorded;
+
+  @override
+  String get serverNotificationsConversionRecorded =>
+      remote.text('serverNotificationsConversionRecorded') ??
+      _base.serverNotificationsConversionRecorded;
+
+  @override
+  String get serverNotificationsTokenRegistered =>
+      remote.text('serverNotificationsTokenRegistered') ??
+      _base.serverNotificationsTokenRegistered;
+
+  @override
+  String get serverNotificationsTokenRemoved =>
+      remote.text('serverNotificationsTokenRemoved') ??
+      _base.serverNotificationsTokenRemoved;
+
+  @override
+  String get serverAuthInvalidCredentials =>
+      remote.text('serverAuthInvalidCredentials') ??
+      _base.serverAuthInvalidCredentials;
+
+  @override
+  String get serverAuthEmailVerified =>
+      remote.text('serverAuthEmailVerified') ?? _base.serverAuthEmailVerified;
+
+  @override
+  String get serverAuthEmailAlreadyVerified =>
+      remote.text('serverAuthEmailAlreadyVerified') ??
+      _base.serverAuthEmailAlreadyVerified;
+
+  @override
+  String get serverAuthVerificationCodeSent =>
+      remote.text('serverAuthVerificationCodeSent') ??
+      _base.serverAuthVerificationCodeSent;
+
+  @override
+  String get serverAuthResetCodeSent =>
+      remote.text('serverAuthResetCodeSent') ?? _base.serverAuthResetCodeSent;
+
+  @override
+  String get serverAuthInvalidCode =>
+      remote.text('serverAuthInvalidCode') ?? _base.serverAuthInvalidCode;
+
+  @override
+  String get serverAuthPasswordReset =>
+      remote.text('serverAuthPasswordReset') ?? _base.serverAuthPasswordReset;
+
+  @override
+  String get serverAuthLoggedOut =>
+      remote.text('serverAuthLoggedOut') ?? _base.serverAuthLoggedOut;
+
+  @override
+  String get serverAuthCurrentPasswordWrong =>
+      remote.text('serverAuthCurrentPasswordWrong') ??
+      _base.serverAuthCurrentPasswordWrong;
+
+  @override
+  String get serverAuthPasswordChanged =>
+      remote.text('serverAuthPasswordChanged') ??
+      _base.serverAuthPasswordChanged;
+
+  @override
+  String get serverAuthAvatarSaveFailed =>
+      remote.text('serverAuthAvatarSaveFailed') ??
+      _base.serverAuthAvatarSaveFailed;
+
+  @override
+  String get serverAuthPasswordWrong =>
+      remote.text('serverAuthPasswordWrong') ?? _base.serverAuthPasswordWrong;
+
+  @override
+  String get serverAuthSocialAccountMismatch =>
+      remote.text('serverAuthSocialAccountMismatch') ??
+      _base.serverAuthSocialAccountMismatch;
+
+  @override
+  String get serverAuthAccountDeleted =>
+      remote.text('serverAuthAccountDeleted') ?? _base.serverAuthAccountDeleted;
+
+  @override
+  String get serverAuthJobTitleOtherRequired =>
+      remote.text('serverAuthJobTitleOtherRequired') ??
+      _base.serverAuthJobTitleOtherRequired;
+
+  @override
+  String get serverAuthVerificationResendWait =>
+      remote.text('serverAuthVerificationResendWait') ??
+      _base.serverAuthVerificationResendWait;
+
+  @override
+  String get serverAuthResetResendWait =>
+      remote.text('serverAuthResetResendWait') ??
+      _base.serverAuthResetResendWait;
+
+  @override
+  String get serverAuthEmailNotVerified =>
+      remote.text('serverAuthEmailNotVerified') ??
+      _base.serverAuthEmailNotVerified;
+
+  @override
+  String serverAuthSocialUnavailable(String provider) =>
+      remote.format(
+        'serverAuthSocialUnavailable',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'provider': provider},
+        ),
+      ) ??
+      _base.serverAuthSocialUnavailable(provider);
+
+  @override
+  String serverAuthSocialInvalidToken(String provider) =>
+      remote.format(
+        'serverAuthSocialInvalidToken',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'provider': provider},
+        ),
+      ) ??
+      _base.serverAuthSocialInvalidToken(provider);
+
+  @override
+  String serverAuthSocialEmailUnverified(String provider) =>
+      remote.format(
+        'serverAuthSocialEmailUnverified',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'provider': provider},
+        ),
+      ) ??
+      _base.serverAuthSocialEmailUnverified(provider);
+
+  @override
+  String get serverCvDeleted =>
+      remote.text('serverCvDeleted') ?? _base.serverCvDeleted;
+
+  @override
+  String get serverCvTemplateUnavailable =>
+      remote.text('serverCvTemplateUnavailable') ??
+      _base.serverCvTemplateUnavailable;
+
+  @override
+  String get serverCvTemplatePremiumOnly =>
+      remote.text('serverCvTemplatePremiumOnly') ??
+      _base.serverCvTemplatePremiumOnly;
+
+  @override
+  String get serverCvEnhanceUnavailable =>
+      remote.text('serverCvEnhanceUnavailable') ??
+      _base.serverCvEnhanceUnavailable;
+
+  @override
+  String get serverCvEnhanceFailed =>
+      remote.text('serverCvEnhanceFailed') ?? _base.serverCvEnhanceFailed;
+
+  @override
+  String get serverCvExportGenerating =>
+      remote.text('serverCvExportGenerating') ?? _base.serverCvExportGenerating;
+
+  @override
+  String get serverCvExportMissingContact =>
+      remote.text('serverCvExportMissingContact') ??
+      _base.serverCvExportMissingContact;
+
+  @override
+  String get serverCvExportUnstructuredExperience =>
+      remote.text('serverCvExportUnstructuredExperience') ??
+      _base.serverCvExportUnstructuredExperience;
+
+  @override
+  String serverCvTemplateHidesSections(String sections) =>
+      remote.format(
+        'serverCvTemplateHidesSections',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'sections': sections},
+        ),
+      ) ??
+      _base.serverCvTemplateHidesSections(sections);
+
+  @override
+  String get serverCvTemplateSectionListSeparator =>
+      remote.text('serverCvTemplateSectionListSeparator') ??
+      _base.serverCvTemplateSectionListSeparator;
+
+  @override
+  String get serverCvSectionSummary =>
+      remote.text('serverCvSectionSummary') ?? _base.serverCvSectionSummary;
+
+  @override
+  String get serverCvSectionSkills =>
+      remote.text('serverCvSectionSkills') ?? _base.serverCvSectionSkills;
+
+  @override
+  String get serverCvSectionExperience =>
+      remote.text('serverCvSectionExperience') ??
+      _base.serverCvSectionExperience;
+
+  @override
+  String get serverCvSectionEducation =>
+      remote.text('serverCvSectionEducation') ?? _base.serverCvSectionEducation;
+
+  @override
+  String get serverCvSectionCertifications =>
+      remote.text('serverCvSectionCertifications') ??
+      _base.serverCvSectionCertifications;
+
+  @override
+  String get serverCvSectionProjects =>
+      remote.text('serverCvSectionProjects') ?? _base.serverCvSectionProjects;
+
+  @override
+  String get serverCvSectionLanguages =>
+      remote.text('serverCvSectionLanguages') ?? _base.serverCvSectionLanguages;
+
+  @override
+  String get serverCvSectionCustom =>
+      remote.text('serverCvSectionCustom') ?? _base.serverCvSectionCustom;
+
+  @override
+  String get serverCvFileTypeUnsupported =>
+      remote.text('serverCvFileTypeUnsupported') ??
+      _base.serverCvFileTypeUnsupported;
+
+  @override
+  String serverCvTextTooShort(int min) =>
+      remote.format(
+        'serverCvTextTooShort',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'min': min},
+        ),
+      ) ??
+      _base.serverCvTextTooShort(min);
+
+  @override
+  String get serverCvPdfUnreadable =>
+      remote.text('serverCvPdfUnreadable') ?? _base.serverCvPdfUnreadable;
+
+  @override
+  String get serverAnalysisResumeRequired =>
+      remote.text('serverAnalysisResumeRequired') ??
+      _base.serverAnalysisResumeRequired;
+
+  @override
+  String get serverAnalysisLockedTitle =>
+      remote.text('serverAnalysisLockedTitle') ??
+      _base.serverAnalysisLockedTitle;
+
+  @override
+  String serverAnalysisLockedMessage(int count) =>
+      remote.format(
+        'serverAnalysisLockedMessage',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.serverAnalysisLockedMessage(count);
+
+  @override
+  String get serverAnalysisLockedCta =>
+      remote.text('serverAnalysisLockedCta') ?? _base.serverAnalysisLockedCta;
+
+  @override
+  String get serverPaywallTitle =>
+      remote.text('serverPaywallTitle') ?? _base.serverPaywallTitle;
+
+  @override
+  String get serverPaywallCta =>
+      remote.text('serverPaywallCta') ?? _base.serverPaywallCta;
+
+  @override
+  String get serverPaywallJobMatch =>
+      remote.text('serverPaywallJobMatch') ?? _base.serverPaywallJobMatch;
+
+  @override
+  String get serverPaywallDownload =>
+      remote.text('serverPaywallDownload') ?? _base.serverPaywallDownload;
+
+  @override
+  String get serverPaywallEnhance =>
+      remote.text('serverPaywallEnhance') ?? _base.serverPaywallEnhance;
+
+  @override
+  String serverPaywallDailyCvLimit(int limit) =>
+      remote.format(
+        'serverPaywallDailyCvLimit',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'limit': limit},
+        ),
+      ) ??
+      _base.serverPaywallDailyCvLimit(limit);
+
+  @override
+  String serverPaywallDailyAnalysisLimit(int limit) =>
+      remote.format(
+        'serverPaywallDailyAnalysisLimit',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'limit': limit},
+        ),
+      ) ??
+      _base.serverPaywallDailyAnalysisLimit(limit);
+
+  @override
+  String get serverPaywallBenefitPdf =>
+      remote.text('serverPaywallBenefitPdf') ?? _base.serverPaywallBenefitPdf;
+
+  @override
+  String get serverPaywallBenefitEnhance =>
+      remote.text('serverPaywallBenefitEnhance') ??
+      _base.serverPaywallBenefitEnhance;
+
+  @override
+  String get serverPaywallBenefitAnalysis =>
+      remote.text('serverPaywallBenefitAnalysis') ??
+      _base.serverPaywallBenefitAnalysis;
+
+  @override
+  String get serverPaywallBenefitUnlimited =>
+      remote.text('serverPaywallBenefitUnlimited') ??
+      _base.serverPaywallBenefitUnlimited;
+
+  @override
+  String get serverJobMatchDailyLimit =>
+      remote.text('serverJobMatchDailyLimit') ?? _base.serverJobMatchDailyLimit;
+
+  @override
+  String get serverPlanMonthlyName =>
+      remote.text('serverPlanMonthlyName') ?? _base.serverPlanMonthlyName;
+
+  @override
+  String get serverPlanSixMonthsName =>
+      remote.text('serverPlanSixMonthsName') ?? _base.serverPlanSixMonthsName;
+
+  @override
+  String get serverPlanSixMonthsBadge =>
+      remote.text('serverPlanSixMonthsBadge') ?? _base.serverPlanSixMonthsBadge;
+
+  @override
+  String get serverPlanAnnualName =>
+      remote.text('serverPlanAnnualName') ?? _base.serverPlanAnnualName;
+
+  @override
+  String get serverErrorUnauthenticated =>
+      remote.text('serverErrorUnauthenticated') ??
+      _base.serverErrorUnauthenticated;
+
+  @override
+  String get serverErrorForbidden =>
+      remote.text('serverErrorForbidden') ?? _base.serverErrorForbidden;
+
+  @override
+  String get serverErrorNotFound =>
+      remote.text('serverErrorNotFound') ?? _base.serverErrorNotFound;
+
+  @override
+  String get serverErrorMethodNotAllowed =>
+      remote.text('serverErrorMethodNotAllowed') ??
+      _base.serverErrorMethodNotAllowed;
+
+  @override
+  String get serverErrorTooManyRequests =>
+      remote.text('serverErrorTooManyRequests') ??
+      _base.serverErrorTooManyRequests;
+
+  @override
+  String get serverErrorServer =>
+      remote.text('serverErrorServer') ?? _base.serverErrorServer;
+
+  @override
+  String get serverErrorUnavailable =>
+      remote.text('serverErrorUnavailable') ?? _base.serverErrorUnavailable;
+
+  @override
+  String get serverErrorRequestFailed =>
+      remote.text('serverErrorRequestFailed') ?? _base.serverErrorRequestFailed;
+
+  @override
+  String serverValidationRequired(String attribute) =>
+      remote.format(
+        'serverValidationRequired',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationRequired(attribute);
+
+  @override
+  String serverValidationString(String attribute) =>
+      remote.format(
+        'serverValidationString',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationString(attribute);
+
+  @override
+  String get serverValidationEmail =>
+      remote.text('serverValidationEmail') ?? _base.serverValidationEmail;
+
+  @override
+  String serverValidationFile(String attribute) =>
+      remote.format(
+        'serverValidationFile',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationFile(attribute);
+
+  @override
+  String serverValidationImage(String attribute) =>
+      remote.format(
+        'serverValidationImage',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationImage(attribute);
+
+  @override
+  String serverValidationMimes(String attribute, String values) =>
+      remote.format(
+        'serverValidationMimes',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'values': values},
+        ),
+      ) ??
+      _base.serverValidationMimes(attribute, values);
+
+  @override
+  String serverValidationMaxString(String attribute, String max) =>
+      remote.format(
+        'serverValidationMaxString',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'max': max},
+        ),
+      ) ??
+      _base.serverValidationMaxString(attribute, max);
+
+  @override
+  String serverValidationMaxFile(String attribute, String max) =>
+      remote.format(
+        'serverValidationMaxFile',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'max': max},
+        ),
+      ) ??
+      _base.serverValidationMaxFile(attribute, max);
+
+  @override
+  String serverValidationMaxNumeric(String attribute, String max) =>
+      remote.format(
+        'serverValidationMaxNumeric',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'max': max},
+        ),
+      ) ??
+      _base.serverValidationMaxNumeric(attribute, max);
+
+  @override
+  String serverValidationMaxArray(String attribute, String max) =>
+      remote.format(
+        'serverValidationMaxArray',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'max': max},
+        ),
+      ) ??
+      _base.serverValidationMaxArray(attribute, max);
+
+  @override
+  String serverValidationMinString(String attribute, String min) =>
+      remote.format(
+        'serverValidationMinString',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'min': min},
+        ),
+      ) ??
+      _base.serverValidationMinString(attribute, min);
+
+  @override
+  String serverValidationMinFile(String attribute, String min) =>
+      remote.format(
+        'serverValidationMinFile',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'min': min},
+        ),
+      ) ??
+      _base.serverValidationMinFile(attribute, min);
+
+  @override
+  String serverValidationMinNumeric(String attribute, String min) =>
+      remote.format(
+        'serverValidationMinNumeric',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'min': min},
+        ),
+      ) ??
+      _base.serverValidationMinNumeric(attribute, min);
+
+  @override
+  String serverValidationMinArray(String attribute, String min) =>
+      remote.format(
+        'serverValidationMinArray',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'min': min},
+        ),
+      ) ??
+      _base.serverValidationMinArray(attribute, min);
+
+  @override
+  String serverValidationBetweenNumeric(
+          String attribute, String min, String max) =>
+      remote.format(
+        'serverValidationBetweenNumeric',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'min': min, 'max': max},
+        ),
+      ) ??
+      _base.serverValidationBetweenNumeric(attribute, min, max);
+
+  @override
+  String serverValidationBetweenString(
+          String attribute, String min, String max) =>
+      remote.format(
+        'serverValidationBetweenString',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'min': min, 'max': max},
+        ),
+      ) ??
+      _base.serverValidationBetweenString(attribute, min, max);
+
+  @override
+  String serverValidationSizeString(String attribute, String size) =>
+      remote.format(
+        'serverValidationSizeString',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute, 'size': size},
+        ),
+      ) ??
+      _base.serverValidationSizeString(attribute, size);
+
+  @override
+  String serverValidationIn(String attribute) =>
+      remote.format(
+        'serverValidationIn',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationIn(attribute);
+
+  @override
+  String serverValidationInteger(String attribute) =>
+      remote.format(
+        'serverValidationInteger',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationInteger(attribute);
+
+  @override
+  String serverValidationNumeric(String attribute) =>
+      remote.format(
+        'serverValidationNumeric',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationNumeric(attribute);
+
+  @override
+  String serverValidationBoolean(String attribute) =>
+      remote.format(
+        'serverValidationBoolean',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationBoolean(attribute);
+
+  @override
+  String serverValidationArray(String attribute) =>
+      remote.format(
+        'serverValidationArray',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationArray(attribute);
+
+  @override
+  String serverValidationRegex(String attribute) =>
+      remote.format(
+        'serverValidationRegex',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationRegex(attribute);
+
+  @override
+  String serverValidationUrl(String attribute) =>
+      remote.format(
+        'serverValidationUrl',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationUrl(attribute);
+
+  @override
+  String serverValidationDate(String attribute) =>
+      remote.format(
+        'serverValidationDate',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationDate(attribute);
+
+  @override
+  String serverValidationExists(String attribute) =>
+      remote.format(
+        'serverValidationExists',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationExists(attribute);
+
+  @override
+  String serverValidationUnique(String attribute) =>
+      remote.format(
+        'serverValidationUnique',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationUnique(attribute);
+
+  @override
+  String serverValidationConfirmed(String attribute) =>
+      remote.format(
+        'serverValidationConfirmed',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationConfirmed(attribute);
+
+  @override
+  String serverValidationRequiredIf(String attribute) =>
+      remote.format(
+        'serverValidationRequiredIf',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationRequiredIf(attribute);
+
+  @override
+  String serverValidationAccepted(String attribute) =>
+      remote.format(
+        'serverValidationAccepted',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationAccepted(attribute);
+
+  @override
+  String serverValidationAlphaDash(String attribute) =>
+      remote.format(
+        'serverValidationAlphaDash',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'attribute': attribute},
+        ),
+      ) ??
+      _base.serverValidationAlphaDash(attribute);
+
+  @override
+  String serverValidationMoreErrors(String message, int count) =>
+      remote.format(
+        'serverValidationMoreErrors',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'message': message, 'count': count},
+        ),
+      ) ??
+      _base.serverValidationMoreErrors(message, count);
+
+  @override
+  String get serverAttributeName =>
+      remote.text('serverAttributeName') ?? _base.serverAttributeName;
+
+  @override
+  String get serverAttributeFullName =>
+      remote.text('serverAttributeFullName') ?? _base.serverAttributeFullName;
+
+  @override
+  String get serverAttributeEmail =>
+      remote.text('serverAttributeEmail') ?? _base.serverAttributeEmail;
+
+  @override
+  String get serverAttributePassword =>
+      remote.text('serverAttributePassword') ?? _base.serverAttributePassword;
+
+  @override
+  String get serverAttributeCurrentPassword =>
+      remote.text('serverAttributeCurrentPassword') ??
+      _base.serverAttributeCurrentPassword;
+
+  @override
+  String get serverAttributeCode =>
+      remote.text('serverAttributeCode') ?? _base.serverAttributeCode;
+
+  @override
+  String get serverAttributePhone =>
+      remote.text('serverAttributePhone') ?? _base.serverAttributePhone;
+
+  @override
+  String get serverAttributeLocation =>
+      remote.text('serverAttributeLocation') ?? _base.serverAttributeLocation;
+
+  @override
+  String get serverAttributeJobTitle =>
+      remote.text('serverAttributeJobTitle') ?? _base.serverAttributeJobTitle;
+
+  @override
+  String get serverAttributeJobTitleOther =>
+      remote.text('serverAttributeJobTitleOther') ??
+      _base.serverAttributeJobTitleOther;
+
+  @override
+  String get serverAttributeAvatar =>
+      remote.text('serverAttributeAvatar') ?? _base.serverAttributeAvatar;
+
+  @override
+  String get serverAttributeRoleInterest =>
+      remote.text('serverAttributeRoleInterest') ??
+      _base.serverAttributeRoleInterest;
+
+  @override
+  String get serverAttributeTargetJobTitle =>
+      remote.text('serverAttributeTargetJobTitle') ??
+      _base.serverAttributeTargetJobTitle;
+
+  @override
+  String get serverAttributeNotes =>
+      remote.text('serverAttributeNotes') ?? _base.serverAttributeNotes;
+
+  @override
+  String get serverAttributeResumeText =>
+      remote.text('serverAttributeResumeText') ??
+      _base.serverAttributeResumeText;
+
+  @override
+  String get serverAttributeResumeFile =>
+      remote.text('serverAttributeResumeFile') ??
+      _base.serverAttributeResumeFile;
+
+  @override
+  String get serverAttributeLinkedin =>
+      remote.text('serverAttributeLinkedin') ?? _base.serverAttributeLinkedin;
+
+  @override
+  String get serverAttributeLanguage =>
+      remote.text('serverAttributeLanguage') ?? _base.serverAttributeLanguage;
+
+  @override
+  String get serverAttributeSummary =>
+      remote.text('serverAttributeSummary') ?? _base.serverAttributeSummary;
+
+  @override
+  String get serverAttributeSkills =>
+      remote.text('serverAttributeSkills') ?? _base.serverAttributeSkills;
+
+  @override
+  String get serverAttributeExperience =>
+      remote.text('serverAttributeExperience') ??
+      _base.serverAttributeExperience;
+
+  @override
+  String get serverAttributeEducation =>
+      remote.text('serverAttributeEducation') ?? _base.serverAttributeEducation;
+
+  @override
+  String get serverAttributeCertifications =>
+      remote.text('serverAttributeCertifications') ??
+      _base.serverAttributeCertifications;
+
+  @override
+  String get serverAttributeJobDescription =>
+      remote.text('serverAttributeJobDescription') ??
+      _base.serverAttributeJobDescription;
+
+  @override
+  String get serverAttributeDraft =>
+      remote.text('serverAttributeDraft') ?? _base.serverAttributeDraft;
+
+  @override
+  String get serverAttributeTemplate =>
+      remote.text('serverAttributeTemplate') ?? _base.serverAttributeTemplate;
+
+  @override
+  String get serverNotifyFirstAnalysisTitle =>
+      remote.text('serverNotifyFirstAnalysisTitle') ??
+      _base.serverNotifyFirstAnalysisTitle;
+
+  @override
+  String get serverNotifyFirstAnalysisBody =>
+      remote.text('serverNotifyFirstAnalysisBody') ??
+      _base.serverNotifyFirstAnalysisBody;
+
+  @override
+  String get serverNotifyLowScoreTitle =>
+      remote.text('serverNotifyLowScoreTitle') ??
+      _base.serverNotifyLowScoreTitle;
+
+  @override
+  String serverNotifyLowScoreBodyScoreTip(String score, String tip) =>
+      remote.format(
+        'serverNotifyLowScoreBodyScoreTip',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'score': score, 'tip': tip},
+        ),
+      ) ??
+      _base.serverNotifyLowScoreBodyScoreTip(score, tip);
+
+  @override
+  String serverNotifyLowScoreBodyTip(String tip) =>
+      remote.format(
+        'serverNotifyLowScoreBodyTip',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'tip': tip},
+        ),
+      ) ??
+      _base.serverNotifyLowScoreBodyTip(tip);
+
+  @override
+  String serverNotifyLowScoreBodyScore(String score) =>
+      remote.format(
+        'serverNotifyLowScoreBodyScore',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'score': score},
+        ),
+      ) ??
+      _base.serverNotifyLowScoreBodyScore(score);
+
+  @override
+  String get serverNotifyLowScoreBody =>
+      remote.text('serverNotifyLowScoreBody') ?? _base.serverNotifyLowScoreBody;
+
+  @override
+  String get serverNotifyAnalysisToCvTitle =>
+      remote.text('serverNotifyAnalysisToCvTitle') ??
+      _base.serverNotifyAnalysisToCvTitle;
+
+  @override
+  String get serverNotifyAnalysisToCvBody =>
+      remote.text('serverNotifyAnalysisToCvBody') ??
+      _base.serverNotifyAnalysisToCvBody;
+
+  @override
+  String get serverNotifyStaleCvTitle =>
+      remote.text('serverNotifyStaleCvTitle') ?? _base.serverNotifyStaleCvTitle;
+
+  @override
+  String get serverNotifyStaleCvBody =>
+      remote.text('serverNotifyStaleCvBody') ?? _base.serverNotifyStaleCvBody;
+
+  @override
+  String get serverNotifyMatchingJobTitle =>
+      remote.text('serverNotifyMatchingJobTitle') ??
+      _base.serverNotifyMatchingJobTitle;
+
+  @override
+  String serverNotifyMatchingJobBodyTitleCompany(
+          String jobTitle, String company) =>
+      remote.format(
+        'serverNotifyMatchingJobBodyTitleCompany',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'jobTitle': jobTitle, 'company': company},
+        ),
+      ) ??
+      _base.serverNotifyMatchingJobBodyTitleCompany(jobTitle, company);
+
+  @override
+  String serverNotifyMatchingJobBodyTitle(String jobTitle) =>
+      remote.format(
+        'serverNotifyMatchingJobBodyTitle',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'jobTitle': jobTitle},
+        ),
+      ) ??
+      _base.serverNotifyMatchingJobBodyTitle(jobTitle);
+
+  @override
+  String get serverNotifyMatchingJobBody =>
+      remote.text('serverNotifyMatchingJobBody') ??
+      _base.serverNotifyMatchingJobBody;
+
+  @override
+  String get serverNotifyEducationTitle =>
+      remote.text('serverNotifyEducationTitle') ??
+      _base.serverNotifyEducationTitle;
+
+  @override
+  String serverNotifyEducationBodyTitle(String title) =>
+      remote.format(
+        'serverNotifyEducationBodyTitle',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'title': title},
+        ),
+      ) ??
+      _base.serverNotifyEducationBodyTitle(title);
+
+  @override
+  String get serverNotifyEducationBody =>
+      remote.text('serverNotifyEducationBody') ??
+      _base.serverNotifyEducationBody;
+
+  @override
+  String get serverNotifyTipTitle =>
+      remote.text('serverNotifyTipTitle') ?? _base.serverNotifyTipTitle;
+
+  @override
+  String get serverNotifyTipBody =>
+      remote.text('serverNotifyTipBody') ?? _base.serverNotifyTipBody;
+
+  @override
+  String get serverNotifyCvReadyTitle =>
+      remote.text('serverNotifyCvReadyTitle') ?? _base.serverNotifyCvReadyTitle;
+
+  @override
+  String get serverNotifyCvReadyBody =>
+      remote.text('serverNotifyCvReadyBody') ?? _base.serverNotifyCvReadyBody;
+
+  @override
+  String get serverNotifyCvFailedTitle =>
+      remote.text('serverNotifyCvFailedTitle') ??
+      _base.serverNotifyCvFailedTitle;
+
+  @override
+  String get serverNotifyCvFailedBody =>
+      remote.text('serverNotifyCvFailedBody') ?? _base.serverNotifyCvFailedBody;
+
+  @override
+  String get serverNotifyNewJobTitle =>
+      remote.text('serverNotifyNewJobTitle') ?? _base.serverNotifyNewJobTitle;
+
+  @override
+  String serverNotifyNewJobBody(String jobTitle) =>
+      remote.format(
+        'serverNotifyNewJobBody',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'jobTitle': jobTitle},
+        ),
+      ) ??
+      _base.serverNotifyNewJobBody(jobTitle);
+
+  @override
+  String serverNotifyNewJobBodyCompany(String jobTitle, String company) =>
+      remote.format(
+        'serverNotifyNewJobBodyCompany',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'jobTitle': jobTitle, 'company': company},
+        ),
+      ) ??
+      _base.serverNotifyNewJobBodyCompany(jobTitle, company);
+
+  @override
+  String serverNotifyNewJobBodyLocation(String jobTitle, String location) =>
+      remote.format(
+        'serverNotifyNewJobBodyLocation',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'jobTitle': jobTitle, 'location': location},
+        ),
+      ) ??
+      _base.serverNotifyNewJobBodyLocation(jobTitle, location);
+
+  @override
+  String serverNotifyNewJobBodyLocationCompany(
+          String jobTitle, String location, String company) =>
+      remote.format(
+        'serverNotifyNewJobBodyLocationCompany',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {
+            'jobTitle': jobTitle,
+            'location': location,
+            'company': company
+          },
+        ),
+      ) ??
+      _base.serverNotifyNewJobBodyLocationCompany(jobTitle, location, company);
+
+  @override
+  String get serverAnalysisNotResume =>
+      remote.text('serverAnalysisNotResume') ?? _base.serverAnalysisNotResume;
+
+  @override
+  String get serverPlanFreeTitle =>
+      remote.text('serverPlanFreeTitle') ?? _base.serverPlanFreeTitle;
+
+  @override
+  String get serverPlanFreeIncludesJobs =>
+      remote.text('serverPlanFreeIncludesJobs') ??
+      _base.serverPlanFreeIncludesJobs;
+
+  @override
+  String get serverPlanFreeIncludesAts =>
+      remote.text('serverPlanFreeIncludesAts') ??
+      _base.serverPlanFreeIncludesAts;
+
+  @override
+  String get serverPlanFreeIncludesPreview =>
+      remote.text('serverPlanFreeIncludesPreview') ??
+      _base.serverPlanFreeIncludesPreview;
+
+  @override
+  String serverPlanFreeIncludesDailyLimits(int cvs, int analyses) =>
+      remote.format(
+        'serverPlanFreeIncludesDailyLimits',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'cvs': cvs, 'analyses': analyses},
+        ),
+      ) ??
+      _base.serverPlanFreeIncludesDailyLimits(cvs, analyses);
+
+  @override
+  String serverPlanFreeExcludesRecommendations(int count) =>
+      remote.format(
+        'serverPlanFreeExcludesRecommendations',
+        (icuMessage, icuLocale) => IcuLite.format(
+          icuMessage,
+          locale: icuLocale,
+          args: {'count': count},
+        ),
+      ) ??
+      _base.serverPlanFreeExcludesRecommendations(count);
+
+  @override
+  String get serverCvDownloadLocked =>
+      remote.text('serverCvDownloadLocked') ?? _base.serverCvDownloadLocked;
 
   /// Placeholder Dart types of every label, in parameter order.
   @visibleForTesting
@@ -4727,6 +6853,8 @@ class RemoteAppLocalizations extends AppLocalizations {
     'cvHubDownload': [],
     'cvHubPreparing': [],
     'cvHubShare': [],
+    'cvShareSubscriptionRequired': [],
+    'cvShareFailed': [],
     'cvHubNextSteps': [],
     'cvHubCheckAts': [],
     'cvHubCheckAtsBody': [],
@@ -4793,6 +6921,14 @@ class RemoteAppLocalizations extends AppLocalizations {
     'sharedPasswordStrengthStrong': [],
     'sharedPasswordStrengthSemantics': ['String'],
     'sharedOfflineShowingSaved': [],
+    'sharedOfflineTitle': [],
+    'sharedOfflineBody': [],
+    'sharedOfflineWaiting': [],
+    'sharedOfflineChecking': [],
+    'sharedOfflineTipsTitle': [],
+    'sharedOfflineTipAirplane': [],
+    'sharedOfflineTipSignal': [],
+    'sharedOfflineOpenSaved': [],
     'sharedNoDataAvailable': [],
     'sharedSomethingWentWrong': [],
     'sharedAiImprovingWording': [],
@@ -4811,6 +6947,7 @@ class RemoteAppLocalizations extends AppLocalizations {
     'sharedClear': [],
     'sharedJobTitleSearchHint': [],
     'sharedJobTitleNoMatches': [],
+    'sharedJobTitleEnterManually': ['String'],
     'sharedNotifications': [],
     'sharedNotificationsUnread': ['int'],
     'sharedProfile': [],
@@ -5077,8 +7214,16 @@ class RemoteAppLocalizations extends AppLocalizations {
     'authCreatingAccount': [],
     'authContinueWithoutAccount': [],
     'authSessionExpired': [],
+    'authSessionExpiredBadge': [],
+    'authSessionExpiredChip': [],
+    'authSessionExpiredTitle': [],
+    'authSessionExpiredBody': [],
+    'authSessionExpiredDataSafe': [],
+    'authSessionExpiredSignIn': [],
+    'authSessionExpiredHelp': [],
     'authLoginUnexpectedError': [],
     'authSocialSignInSoon': ['String'],
+    'authSocialSignInNotConfigured': ['String'],
     'authLoginSubtitle': [],
     'authForgotPasswordLink': [],
     'authSignInButton': [],
@@ -5157,6 +7302,9 @@ class RemoteAppLocalizations extends AppLocalizations {
     'settingsDeleteFailed': [],
     'settingsDeleteWarning': [],
     'settingsDeleteConfirmWithPassword': [],
+    'settingsDeleteConfirmWithProvider': [],
+    'settingsDeleteWithProvider': ['String'],
+    'settingsDeleteProviderMismatch': ['String'],
     'settingsDeletePasswordRequired': [],
     'settingsDeleteMyAccount': [],
     'settingsDeleting': [],
@@ -5200,17 +7348,12 @@ class RemoteAppLocalizations extends AppLocalizations {
     'jobsCityKhobar': [],
     'jobsCityMecca': [],
     'jobsCityMedina': [],
-    'jobsPersonalizedTitle': [],
-    'jobsPersonalizedFallback': [],
-    'jobsMatchedActive': [],
-    'jobsMatchToggle': [],
     'jobsEmptyFeed': [],
     'jobsLoadFailed': [],
     'jobsLatestPostings': [],
     'jobsDetailTitle': [],
     'jobsVerifiedSourceDetail': [],
     'jobsTamheerProgram': [],
-    'jobsCompatibilityTitle': [],
     'jobsSkillsRequired': [],
     'jobsDescriptionTitle': [],
     'jobsTailorCv': [],
@@ -5264,8 +7407,341 @@ class RemoteAppLocalizations extends AppLocalizations {
     'atsBandVeryGood': [],
     'atsBandFair': [],
     'atsBandWeak': [],
-    'jobsMatchScore': ['int'],
     'atsBenchmark': ['String'],
+    'atsCategoryGeneral': [],
+    'atsHiddenMore': ['int'],
+    'myCvsHeaderSubtitle': [],
+    'myCvsToolsTitle': [],
+    'myCvsToolCreateTitle': [],
+    'myCvsToolCreateBody': [],
+    'myCvsToolScanTitle': [],
+    'myCvsToolScanBody': [],
+    'myCvsToolUploadTitle': [],
+    'myCvsToolUploadBody': [],
+    'myCvsToolTargetTitle': [],
+    'myCvsToolTargetBody': [],
+    'myCvsListTitle': [],
+    'myCvsEmptyBody': [],
+    'myCvsEmptyCreate': [],
+    'myCvsEmptyUpload': [],
+    'cvCardOpen': [],
+    'cvCardMore': [],
+    'cvCardScore': ['int'],
+    'cvCardNotScanned': [],
+    'cvCardScanNow': [],
+    'cvCardNeedsWork': [],
+    'settingsNotificationsFilterAll': [],
+    'settingsNotificationsCategoryCv': [],
+    'settingsNotificationsCategoryJobs': [],
+    'settingsNotificationsCategoryAnalysis': [],
+    'settingsNotificationsCategoryLearning': [],
+    'settingsNotificationsCategoryGeneral': [],
+    'settingsNotificationsToday': [],
+    'settingsNotificationsYesterday': [],
+    'settingsNotificationsThisWeek': [],
+    'settingsNotificationsEarlier': [],
+    'settingsNotificationsNewCount': ['int'],
+    'settingsNotificationsCount': ['int'],
+    'settingsNotificationsViewCv': [],
+    'settingsNotificationsScanCta': [],
+    'settingsNotificationsFilterEmpty': [],
+    'settingsNotificationsPreviewTitle': [],
+    'settingsNotificationsPreviewCvTitle': [],
+    'settingsNotificationsPreviewCvBody': [],
+    'settingsNotificationsPreviewJobsTitle': [],
+    'settingsNotificationsPreviewJobsBody': [],
+    'settingsNotificationsPreviewAnalysisTitle': [],
+    'settingsNotificationsPreviewAnalysisBody': [],
+    'settingsNotificationsCreateCvCta': [],
+    'authSignInRequiredTitle': [],
+    'authSignInRequiredSubtitle': [],
+    'authSignInRequiredCardTitle': [],
+    'authSignInRequiredBody': [],
+    'authSignInRequiredBrowseJobs': [],
+    'jobsRegionAll': [],
+    'jobsRegionCentral': [],
+    'jobsRegionEastern': [],
+    'jobsRegionWestern': [],
+    'jobsRegionNorthern': [],
+    'jobsRegionSouthern': [],
+    'jobsEmptyRegionTitle': ['String'],
+    'jobsEmptyRegionBody': [],
+    'jobsShowAllRegions': [],
+    'jobsMatchedNeedsTitle': [],
+    'jobsMatchedSetTitle': [],
+    'jobsMatchedBasedOn': ['String'],
+    'jobsHowToApply': [],
+    'jobsApplyOpensHost': ['String'],
+    'jobsApplyByEmail': [],
+    'jobsApplyEmailHint': [],
+    'jobsCopyEmail': [],
+    'jobsEmailCopied': [],
+    'jobsOpenEmailFailed': [],
+    'jobsNoDirectApply': [],
+    'jobsNoDirectApplyHint': [],
+    'jobsApplyMethodLink': [],
+    'jobsApplyMethodEmail': [],
+    'jobsSourceName': ['String'],
+    'jobsViewSourcePost': [],
+    'jobsShare': [],
+    'jobsRemoteChip': [],
+    'homeProfileSubtitle': [],
+    'homeProfileOpen': [],
+    'homeStartCreateTitle': [],
+    'homeStartCreateBody': [],
+    'homeStartAtsTitle': [],
+    'homeStartAtsBody': [],
+    'homeServiceUpload': [],
+    'homeServiceTarget': [],
+    'homeServiceEducation': [],
+    'homeSoon': [],
+    'homeServiceSoonA11y': ['String'],
+    'homeMyCvTitle': [],
+    'homeMyCvEdited': ['String'],
+    'homeMyCvEdit': [],
+    'homeMyCvCheck': [],
+    'homeMyCvEmptyTitle': [],
+    'homeMyCvEmptyBody': [],
+    'homeHonesty': [],
+    'authEmailHint': [],
+    'authPhoneHint': [],
+    'cvPersonalEmailHint': [],
+    'cvPersonalPhoneHint': [],
+    'cvPersonalLinkedinHint': [],
+    'authSocialGoogle': [],
+    'authSocialApple': [],
+    'authRegisterEmailHint': [],
+    'timeJustNow': [],
+    'timeMinutesAgo': ['int'],
+    'timeHoursAgo': ['int'],
+    'timeYesterday': [],
+    'savedJustNow': [],
+    'savedAgo': ['String'],
+    'untitledTitle': [],
+    'aiErrorTooLong': [],
+    'aiErrorTryAgain': [],
+    'aiGenerationFailed': ['String'],
+    'aiSuggestionsFailed': ['String'],
+    'aiLocalFallback': ['String'],
+    'jobNewsTitle': [],
+    'crashMessage': [],
+    'avatarFallbackInitial': [],
+    'coreApiErrorBadResponse': [],
+    'coreApiErrorEmptyResponse': [],
+    'coreApiErrorUnexpected': [],
+    'coreApiErrorRequestFailed': [],
+    'coreApiErrorStatus': ['int'],
+    'authVerifyCodeResent': [],
+    'authForgotCodeSent': [],
+    'authForgotPasswordReset': [],
+    'serverDashboardStatusActive': [],
+    'serverDashboardCreateCvTitle': [],
+    'serverDashboardCreateCvSubtitle': [],
+    'serverDashboardCreateCvButton': [],
+    'serverDashboardAnalyzeTitle': [],
+    'serverDashboardAnalyzeSubtitle': [],
+    'serverDashboardAnalyzeButton': [],
+    'serverMyCvsTitle': [],
+    'serverMyCvsSummary': ['int'],
+    'serverMyCvsUpdated': ['String'],
+    'serverMyCvsUpdatedUnknown': [],
+    'serverMyCvsTailoredTitle': ['String'],
+    'serverCvTemplatesTitle': [],
+    'serverCvTemplatesSubtitle': [],
+    'serverEducationTitle': [],
+    'serverEducationSubtitle': [],
+    'serverEducationTargetLabel': [],
+    'serverEducationTabNews': [],
+    'serverEducationTabCertificates': [],
+    'serverEducationTabStudy': [],
+    'serverEducationStartLearning': [],
+    'serverJobsTitle': [],
+    'serverJobsSubtitle': [],
+    'serverJobsApplyBy': ['String'],
+    'serverJobsSourceGovLabel': [],
+    'serverJobsSourceGovBadge': [],
+    'serverJobsSourceCompanyLabel': [],
+    'serverJobsSourceCompanyBadge': [],
+    'serverJobsSourceTamheerLabel': [],
+    'serverJobsSourceTamheerBadge': [],
+    'serverJobsSourceStartupLabel': [],
+    'serverJobsSourceStartupBadge': [],
+    'serverJobsSalaryRange': ['String', 'String', 'String'],
+    'serverJobsSalaryFrom': ['String', 'String'],
+    'serverJobsSalaryUpTo': ['String', 'String'],
+    'serverJobsCurrencySar': [],
+    'serverNotificationsAllRead': [],
+    'serverNotificationsPreferencesUpdated': [],
+    'serverNotificationsOpenRecorded': [],
+    'serverNotificationsActivityRecorded': [],
+    'serverNotificationsConversionRecorded': [],
+    'serverNotificationsTokenRegistered': [],
+    'serverNotificationsTokenRemoved': [],
+    'serverAuthInvalidCredentials': [],
+    'serverAuthEmailVerified': [],
+    'serverAuthEmailAlreadyVerified': [],
+    'serverAuthVerificationCodeSent': [],
+    'serverAuthResetCodeSent': [],
+    'serverAuthInvalidCode': [],
+    'serverAuthPasswordReset': [],
+    'serverAuthLoggedOut': [],
+    'serverAuthCurrentPasswordWrong': [],
+    'serverAuthPasswordChanged': [],
+    'serverAuthAvatarSaveFailed': [],
+    'serverAuthPasswordWrong': [],
+    'serverAuthSocialAccountMismatch': [],
+    'serverAuthAccountDeleted': [],
+    'serverAuthJobTitleOtherRequired': [],
+    'serverAuthVerificationResendWait': [],
+    'serverAuthResetResendWait': [],
+    'serverAuthEmailNotVerified': [],
+    'serverAuthSocialUnavailable': ['String'],
+    'serverAuthSocialInvalidToken': ['String'],
+    'serverAuthSocialEmailUnverified': ['String'],
+    'serverCvDeleted': [],
+    'serverCvTemplateUnavailable': [],
+    'serverCvTemplatePremiumOnly': [],
+    'serverCvEnhanceUnavailable': [],
+    'serverCvEnhanceFailed': [],
+    'serverCvExportGenerating': [],
+    'serverCvExportMissingContact': [],
+    'serverCvExportUnstructuredExperience': [],
+    'serverCvTemplateHidesSections': ['String'],
+    'serverCvTemplateSectionListSeparator': [],
+    'serverCvSectionSummary': [],
+    'serverCvSectionSkills': [],
+    'serverCvSectionExperience': [],
+    'serverCvSectionEducation': [],
+    'serverCvSectionCertifications': [],
+    'serverCvSectionProjects': [],
+    'serverCvSectionLanguages': [],
+    'serverCvSectionCustom': [],
+    'serverCvFileTypeUnsupported': [],
+    'serverCvTextTooShort': ['int'],
+    'serverCvPdfUnreadable': [],
+    'serverAnalysisResumeRequired': [],
+    'serverAnalysisLockedTitle': [],
+    'serverAnalysisLockedMessage': ['int'],
+    'serverAnalysisLockedCta': [],
+    'serverPaywallTitle': [],
+    'serverPaywallCta': [],
+    'serverPaywallJobMatch': [],
+    'serverPaywallDownload': [],
+    'serverPaywallEnhance': [],
+    'serverPaywallDailyCvLimit': ['int'],
+    'serverPaywallDailyAnalysisLimit': ['int'],
+    'serverPaywallBenefitPdf': [],
+    'serverPaywallBenefitEnhance': [],
+    'serverPaywallBenefitAnalysis': [],
+    'serverPaywallBenefitUnlimited': [],
+    'serverJobMatchDailyLimit': [],
+    'serverPlanMonthlyName': [],
+    'serverPlanSixMonthsName': [],
+    'serverPlanSixMonthsBadge': [],
+    'serverPlanAnnualName': [],
+    'serverErrorUnauthenticated': [],
+    'serverErrorForbidden': [],
+    'serverErrorNotFound': [],
+    'serverErrorMethodNotAllowed': [],
+    'serverErrorTooManyRequests': [],
+    'serverErrorServer': [],
+    'serverErrorUnavailable': [],
+    'serverErrorRequestFailed': [],
+    'serverValidationRequired': ['String'],
+    'serverValidationString': ['String'],
+    'serverValidationEmail': [],
+    'serverValidationFile': ['String'],
+    'serverValidationImage': ['String'],
+    'serverValidationMimes': ['String', 'String'],
+    'serverValidationMaxString': ['String', 'String'],
+    'serverValidationMaxFile': ['String', 'String'],
+    'serverValidationMaxNumeric': ['String', 'String'],
+    'serverValidationMaxArray': ['String', 'String'],
+    'serverValidationMinString': ['String', 'String'],
+    'serverValidationMinFile': ['String', 'String'],
+    'serverValidationMinNumeric': ['String', 'String'],
+    'serverValidationMinArray': ['String', 'String'],
+    'serverValidationBetweenNumeric': ['String', 'String', 'String'],
+    'serverValidationBetweenString': ['String', 'String', 'String'],
+    'serverValidationSizeString': ['String', 'String'],
+    'serverValidationIn': ['String'],
+    'serverValidationInteger': ['String'],
+    'serverValidationNumeric': ['String'],
+    'serverValidationBoolean': ['String'],
+    'serverValidationArray': ['String'],
+    'serverValidationRegex': ['String'],
+    'serverValidationUrl': ['String'],
+    'serverValidationDate': ['String'],
+    'serverValidationExists': ['String'],
+    'serverValidationUnique': ['String'],
+    'serverValidationConfirmed': ['String'],
+    'serverValidationRequiredIf': ['String'],
+    'serverValidationAccepted': ['String'],
+    'serverValidationAlphaDash': ['String'],
+    'serverValidationMoreErrors': ['String', 'int'],
+    'serverAttributeName': [],
+    'serverAttributeFullName': [],
+    'serverAttributeEmail': [],
+    'serverAttributePassword': [],
+    'serverAttributeCurrentPassword': [],
+    'serverAttributeCode': [],
+    'serverAttributePhone': [],
+    'serverAttributeLocation': [],
+    'serverAttributeJobTitle': [],
+    'serverAttributeJobTitleOther': [],
+    'serverAttributeAvatar': [],
+    'serverAttributeRoleInterest': [],
+    'serverAttributeTargetJobTitle': [],
+    'serverAttributeNotes': [],
+    'serverAttributeResumeText': [],
+    'serverAttributeResumeFile': [],
+    'serverAttributeLinkedin': [],
+    'serverAttributeLanguage': [],
+    'serverAttributeSummary': [],
+    'serverAttributeSkills': [],
+    'serverAttributeExperience': [],
+    'serverAttributeEducation': [],
+    'serverAttributeCertifications': [],
+    'serverAttributeJobDescription': [],
+    'serverAttributeDraft': [],
+    'serverAttributeTemplate': [],
+    'serverNotifyFirstAnalysisTitle': [],
+    'serverNotifyFirstAnalysisBody': [],
+    'serverNotifyLowScoreTitle': [],
+    'serverNotifyLowScoreBodyScoreTip': ['String', 'String'],
+    'serverNotifyLowScoreBodyTip': ['String'],
+    'serverNotifyLowScoreBodyScore': ['String'],
+    'serverNotifyLowScoreBody': [],
+    'serverNotifyAnalysisToCvTitle': [],
+    'serverNotifyAnalysisToCvBody': [],
+    'serverNotifyStaleCvTitle': [],
+    'serverNotifyStaleCvBody': [],
+    'serverNotifyMatchingJobTitle': [],
+    'serverNotifyMatchingJobBodyTitleCompany': ['String', 'String'],
+    'serverNotifyMatchingJobBodyTitle': ['String'],
+    'serverNotifyMatchingJobBody': [],
+    'serverNotifyEducationTitle': [],
+    'serverNotifyEducationBodyTitle': ['String'],
+    'serverNotifyEducationBody': [],
+    'serverNotifyTipTitle': [],
+    'serverNotifyTipBody': [],
+    'serverNotifyCvReadyTitle': [],
+    'serverNotifyCvReadyBody': [],
+    'serverNotifyCvFailedTitle': [],
+    'serverNotifyCvFailedBody': [],
+    'serverNotifyNewJobTitle': [],
+    'serverNotifyNewJobBody': ['String'],
+    'serverNotifyNewJobBodyCompany': ['String', 'String'],
+    'serverNotifyNewJobBodyLocation': ['String', 'String'],
+    'serverNotifyNewJobBodyLocationCompany': ['String', 'String', 'String'],
+    'serverAnalysisNotResume': [],
+    'serverPlanFreeTitle': [],
+    'serverPlanFreeIncludesJobs': [],
+    'serverPlanFreeIncludesAts': [],
+    'serverPlanFreeIncludesPreview': [],
+    'serverPlanFreeIncludesDailyLimits': ['int', 'int'],
+    'serverPlanFreeExcludesRecommendations': ['int'],
+    'serverCvDownloadLocked': [],
   };
 
   /// Calls label [key] on [l] with positional args [a].
@@ -5702,6 +8178,8 @@ class RemoteAppLocalizations extends AppLocalizations {
         'cvHubDownload' => l.cvHubDownload,
         'cvHubPreparing' => l.cvHubPreparing,
         'cvHubShare' => l.cvHubShare,
+        'cvShareSubscriptionRequired' => l.cvShareSubscriptionRequired,
+        'cvShareFailed' => l.cvShareFailed,
         'cvHubNextSteps' => l.cvHubNextSteps,
         'cvHubCheckAts' => l.cvHubCheckAts,
         'cvHubCheckAtsBody' => l.cvHubCheckAtsBody,
@@ -5769,6 +8247,14 @@ class RemoteAppLocalizations extends AppLocalizations {
         'sharedPasswordStrengthSemantics' =>
           l.sharedPasswordStrengthSemantics(a[0] as String),
         'sharedOfflineShowingSaved' => l.sharedOfflineShowingSaved,
+        'sharedOfflineTitle' => l.sharedOfflineTitle,
+        'sharedOfflineBody' => l.sharedOfflineBody,
+        'sharedOfflineWaiting' => l.sharedOfflineWaiting,
+        'sharedOfflineChecking' => l.sharedOfflineChecking,
+        'sharedOfflineTipsTitle' => l.sharedOfflineTipsTitle,
+        'sharedOfflineTipAirplane' => l.sharedOfflineTipAirplane,
+        'sharedOfflineTipSignal' => l.sharedOfflineTipSignal,
+        'sharedOfflineOpenSaved' => l.sharedOfflineOpenSaved,
         'sharedNoDataAvailable' => l.sharedNoDataAvailable,
         'sharedSomethingWentWrong' => l.sharedSomethingWentWrong,
         'sharedAiImprovingWording' => l.sharedAiImprovingWording,
@@ -5789,6 +8275,8 @@ class RemoteAppLocalizations extends AppLocalizations {
         'sharedClear' => l.sharedClear,
         'sharedJobTitleSearchHint' => l.sharedJobTitleSearchHint,
         'sharedJobTitleNoMatches' => l.sharedJobTitleNoMatches,
+        'sharedJobTitleEnterManually' =>
+          l.sharedJobTitleEnterManually(a[0] as String),
         'sharedNotifications' => l.sharedNotifications,
         'sharedNotificationsUnread' => l.sharedNotificationsUnread(a[0] as int),
         'sharedProfile' => l.sharedProfile,
@@ -6069,8 +8557,17 @@ class RemoteAppLocalizations extends AppLocalizations {
         'authCreatingAccount' => l.authCreatingAccount,
         'authContinueWithoutAccount' => l.authContinueWithoutAccount,
         'authSessionExpired' => l.authSessionExpired,
+        'authSessionExpiredBadge' => l.authSessionExpiredBadge,
+        'authSessionExpiredChip' => l.authSessionExpiredChip,
+        'authSessionExpiredTitle' => l.authSessionExpiredTitle,
+        'authSessionExpiredBody' => l.authSessionExpiredBody,
+        'authSessionExpiredDataSafe' => l.authSessionExpiredDataSafe,
+        'authSessionExpiredSignIn' => l.authSessionExpiredSignIn,
+        'authSessionExpiredHelp' => l.authSessionExpiredHelp,
         'authLoginUnexpectedError' => l.authLoginUnexpectedError,
         'authSocialSignInSoon' => l.authSocialSignInSoon(a[0] as String),
+        'authSocialSignInNotConfigured' =>
+          l.authSocialSignInNotConfigured(a[0] as String),
         'authLoginSubtitle' => l.authLoginSubtitle,
         'authForgotPasswordLink' => l.authForgotPasswordLink,
         'authSignInButton' => l.authSignInButton,
@@ -6156,6 +8653,12 @@ class RemoteAppLocalizations extends AppLocalizations {
         'settingsDeleteWarning' => l.settingsDeleteWarning,
         'settingsDeleteConfirmWithPassword' =>
           l.settingsDeleteConfirmWithPassword,
+        'settingsDeleteConfirmWithProvider' =>
+          l.settingsDeleteConfirmWithProvider,
+        'settingsDeleteWithProvider' =>
+          l.settingsDeleteWithProvider(a[0] as String),
+        'settingsDeleteProviderMismatch' =>
+          l.settingsDeleteProviderMismatch(a[0] as String),
         'settingsDeletePasswordRequired' => l.settingsDeletePasswordRequired,
         'settingsDeleteMyAccount' => l.settingsDeleteMyAccount,
         'settingsDeleting' => l.settingsDeleting,
@@ -6200,17 +8703,12 @@ class RemoteAppLocalizations extends AppLocalizations {
         'jobsCityKhobar' => l.jobsCityKhobar,
         'jobsCityMecca' => l.jobsCityMecca,
         'jobsCityMedina' => l.jobsCityMedina,
-        'jobsPersonalizedTitle' => l.jobsPersonalizedTitle,
-        'jobsPersonalizedFallback' => l.jobsPersonalizedFallback,
-        'jobsMatchedActive' => l.jobsMatchedActive,
-        'jobsMatchToggle' => l.jobsMatchToggle,
         'jobsEmptyFeed' => l.jobsEmptyFeed,
         'jobsLoadFailed' => l.jobsLoadFailed,
         'jobsLatestPostings' => l.jobsLatestPostings,
         'jobsDetailTitle' => l.jobsDetailTitle,
         'jobsVerifiedSourceDetail' => l.jobsVerifiedSourceDetail,
         'jobsTamheerProgram' => l.jobsTamheerProgram,
-        'jobsCompatibilityTitle' => l.jobsCompatibilityTitle,
         'jobsSkillsRequired' => l.jobsSkillsRequired,
         'jobsDescriptionTitle' => l.jobsDescriptionTitle,
         'jobsTailorCv' => l.jobsTailorCv,
@@ -6264,8 +8762,404 @@ class RemoteAppLocalizations extends AppLocalizations {
         'atsBandVeryGood' => l.atsBandVeryGood,
         'atsBandFair' => l.atsBandFair,
         'atsBandWeak' => l.atsBandWeak,
-        'jobsMatchScore' => l.jobsMatchScore(a[0] as int),
         'atsBenchmark' => l.atsBenchmark(a[0] as String),
+        'atsCategoryGeneral' => l.atsCategoryGeneral,
+        'atsHiddenMore' => l.atsHiddenMore(a[0] as int),
+        'myCvsHeaderSubtitle' => l.myCvsHeaderSubtitle,
+        'myCvsToolsTitle' => l.myCvsToolsTitle,
+        'myCvsToolCreateTitle' => l.myCvsToolCreateTitle,
+        'myCvsToolCreateBody' => l.myCvsToolCreateBody,
+        'myCvsToolScanTitle' => l.myCvsToolScanTitle,
+        'myCvsToolScanBody' => l.myCvsToolScanBody,
+        'myCvsToolUploadTitle' => l.myCvsToolUploadTitle,
+        'myCvsToolUploadBody' => l.myCvsToolUploadBody,
+        'myCvsToolTargetTitle' => l.myCvsToolTargetTitle,
+        'myCvsToolTargetBody' => l.myCvsToolTargetBody,
+        'myCvsListTitle' => l.myCvsListTitle,
+        'myCvsEmptyBody' => l.myCvsEmptyBody,
+        'myCvsEmptyCreate' => l.myCvsEmptyCreate,
+        'myCvsEmptyUpload' => l.myCvsEmptyUpload,
+        'cvCardOpen' => l.cvCardOpen,
+        'cvCardMore' => l.cvCardMore,
+        'cvCardScore' => l.cvCardScore(a[0] as int),
+        'cvCardNotScanned' => l.cvCardNotScanned,
+        'cvCardScanNow' => l.cvCardScanNow,
+        'cvCardNeedsWork' => l.cvCardNeedsWork,
+        'settingsNotificationsFilterAll' => l.settingsNotificationsFilterAll,
+        'settingsNotificationsCategoryCv' => l.settingsNotificationsCategoryCv,
+        'settingsNotificationsCategoryJobs' =>
+          l.settingsNotificationsCategoryJobs,
+        'settingsNotificationsCategoryAnalysis' =>
+          l.settingsNotificationsCategoryAnalysis,
+        'settingsNotificationsCategoryLearning' =>
+          l.settingsNotificationsCategoryLearning,
+        'settingsNotificationsCategoryGeneral' =>
+          l.settingsNotificationsCategoryGeneral,
+        'settingsNotificationsToday' => l.settingsNotificationsToday,
+        'settingsNotificationsYesterday' => l.settingsNotificationsYesterday,
+        'settingsNotificationsThisWeek' => l.settingsNotificationsThisWeek,
+        'settingsNotificationsEarlier' => l.settingsNotificationsEarlier,
+        'settingsNotificationsNewCount' =>
+          l.settingsNotificationsNewCount(a[0] as int),
+        'settingsNotificationsCount' =>
+          l.settingsNotificationsCount(a[0] as int),
+        'settingsNotificationsViewCv' => l.settingsNotificationsViewCv,
+        'settingsNotificationsScanCta' => l.settingsNotificationsScanCta,
+        'settingsNotificationsFilterEmpty' =>
+          l.settingsNotificationsFilterEmpty,
+        'settingsNotificationsPreviewTitle' =>
+          l.settingsNotificationsPreviewTitle,
+        'settingsNotificationsPreviewCvTitle' =>
+          l.settingsNotificationsPreviewCvTitle,
+        'settingsNotificationsPreviewCvBody' =>
+          l.settingsNotificationsPreviewCvBody,
+        'settingsNotificationsPreviewJobsTitle' =>
+          l.settingsNotificationsPreviewJobsTitle,
+        'settingsNotificationsPreviewJobsBody' =>
+          l.settingsNotificationsPreviewJobsBody,
+        'settingsNotificationsPreviewAnalysisTitle' =>
+          l.settingsNotificationsPreviewAnalysisTitle,
+        'settingsNotificationsPreviewAnalysisBody' =>
+          l.settingsNotificationsPreviewAnalysisBody,
+        'settingsNotificationsCreateCvCta' =>
+          l.settingsNotificationsCreateCvCta,
+        'authSignInRequiredTitle' => l.authSignInRequiredTitle,
+        'authSignInRequiredSubtitle' => l.authSignInRequiredSubtitle,
+        'authSignInRequiredCardTitle' => l.authSignInRequiredCardTitle,
+        'authSignInRequiredBody' => l.authSignInRequiredBody,
+        'authSignInRequiredBrowseJobs' => l.authSignInRequiredBrowseJobs,
+        'jobsRegionAll' => l.jobsRegionAll,
+        'jobsRegionCentral' => l.jobsRegionCentral,
+        'jobsRegionEastern' => l.jobsRegionEastern,
+        'jobsRegionWestern' => l.jobsRegionWestern,
+        'jobsRegionNorthern' => l.jobsRegionNorthern,
+        'jobsRegionSouthern' => l.jobsRegionSouthern,
+        'jobsEmptyRegionTitle' => l.jobsEmptyRegionTitle(a[0] as String),
+        'jobsEmptyRegionBody' => l.jobsEmptyRegionBody,
+        'jobsShowAllRegions' => l.jobsShowAllRegions,
+        'jobsMatchedNeedsTitle' => l.jobsMatchedNeedsTitle,
+        'jobsMatchedSetTitle' => l.jobsMatchedSetTitle,
+        'jobsMatchedBasedOn' => l.jobsMatchedBasedOn(a[0] as String),
+        'jobsHowToApply' => l.jobsHowToApply,
+        'jobsApplyOpensHost' => l.jobsApplyOpensHost(a[0] as String),
+        'jobsApplyByEmail' => l.jobsApplyByEmail,
+        'jobsApplyEmailHint' => l.jobsApplyEmailHint,
+        'jobsCopyEmail' => l.jobsCopyEmail,
+        'jobsEmailCopied' => l.jobsEmailCopied,
+        'jobsOpenEmailFailed' => l.jobsOpenEmailFailed,
+        'jobsNoDirectApply' => l.jobsNoDirectApply,
+        'jobsNoDirectApplyHint' => l.jobsNoDirectApplyHint,
+        'jobsApplyMethodLink' => l.jobsApplyMethodLink,
+        'jobsApplyMethodEmail' => l.jobsApplyMethodEmail,
+        'jobsSourceName' => l.jobsSourceName(a[0] as String),
+        'jobsViewSourcePost' => l.jobsViewSourcePost,
+        'jobsShare' => l.jobsShare,
+        'jobsRemoteChip' => l.jobsRemoteChip,
+        'homeProfileSubtitle' => l.homeProfileSubtitle,
+        'homeProfileOpen' => l.homeProfileOpen,
+        'homeStartCreateTitle' => l.homeStartCreateTitle,
+        'homeStartCreateBody' => l.homeStartCreateBody,
+        'homeStartAtsTitle' => l.homeStartAtsTitle,
+        'homeStartAtsBody' => l.homeStartAtsBody,
+        'homeServiceUpload' => l.homeServiceUpload,
+        'homeServiceTarget' => l.homeServiceTarget,
+        'homeServiceEducation' => l.homeServiceEducation,
+        'homeSoon' => l.homeSoon,
+        'homeServiceSoonA11y' => l.homeServiceSoonA11y(a[0] as String),
+        'homeMyCvTitle' => l.homeMyCvTitle,
+        'homeMyCvEdited' => l.homeMyCvEdited(a[0] as String),
+        'homeMyCvEdit' => l.homeMyCvEdit,
+        'homeMyCvCheck' => l.homeMyCvCheck,
+        'homeMyCvEmptyTitle' => l.homeMyCvEmptyTitle,
+        'homeMyCvEmptyBody' => l.homeMyCvEmptyBody,
+        'homeHonesty' => l.homeHonesty,
+        'authEmailHint' => l.authEmailHint,
+        'authPhoneHint' => l.authPhoneHint,
+        'cvPersonalEmailHint' => l.cvPersonalEmailHint,
+        'cvPersonalPhoneHint' => l.cvPersonalPhoneHint,
+        'cvPersonalLinkedinHint' => l.cvPersonalLinkedinHint,
+        'authSocialGoogle' => l.authSocialGoogle,
+        'authSocialApple' => l.authSocialApple,
+        'authRegisterEmailHint' => l.authRegisterEmailHint,
+        'timeJustNow' => l.timeJustNow,
+        'timeMinutesAgo' => l.timeMinutesAgo(a[0] as int),
+        'timeHoursAgo' => l.timeHoursAgo(a[0] as int),
+        'timeYesterday' => l.timeYesterday,
+        'savedJustNow' => l.savedJustNow,
+        'savedAgo' => l.savedAgo(a[0] as String),
+        'untitledTitle' => l.untitledTitle,
+        'aiErrorTooLong' => l.aiErrorTooLong,
+        'aiErrorTryAgain' => l.aiErrorTryAgain,
+        'aiGenerationFailed' => l.aiGenerationFailed(a[0] as String),
+        'aiSuggestionsFailed' => l.aiSuggestionsFailed(a[0] as String),
+        'aiLocalFallback' => l.aiLocalFallback(a[0] as String),
+        'jobNewsTitle' => l.jobNewsTitle,
+        'crashMessage' => l.crashMessage,
+        'avatarFallbackInitial' => l.avatarFallbackInitial,
+        'coreApiErrorBadResponse' => l.coreApiErrorBadResponse,
+        'coreApiErrorEmptyResponse' => l.coreApiErrorEmptyResponse,
+        'coreApiErrorUnexpected' => l.coreApiErrorUnexpected,
+        'coreApiErrorRequestFailed' => l.coreApiErrorRequestFailed,
+        'coreApiErrorStatus' => l.coreApiErrorStatus(a[0] as int),
+        'authVerifyCodeResent' => l.authVerifyCodeResent,
+        'authForgotCodeSent' => l.authForgotCodeSent,
+        'authForgotPasswordReset' => l.authForgotPasswordReset,
+        'serverDashboardStatusActive' => l.serverDashboardStatusActive,
+        'serverDashboardCreateCvTitle' => l.serverDashboardCreateCvTitle,
+        'serverDashboardCreateCvSubtitle' => l.serverDashboardCreateCvSubtitle,
+        'serverDashboardCreateCvButton' => l.serverDashboardCreateCvButton,
+        'serverDashboardAnalyzeTitle' => l.serverDashboardAnalyzeTitle,
+        'serverDashboardAnalyzeSubtitle' => l.serverDashboardAnalyzeSubtitle,
+        'serverDashboardAnalyzeButton' => l.serverDashboardAnalyzeButton,
+        'serverMyCvsTitle' => l.serverMyCvsTitle,
+        'serverMyCvsSummary' => l.serverMyCvsSummary(a[0] as int),
+        'serverMyCvsUpdated' => l.serverMyCvsUpdated(a[0] as String),
+        'serverMyCvsUpdatedUnknown' => l.serverMyCvsUpdatedUnknown,
+        'serverMyCvsTailoredTitle' =>
+          l.serverMyCvsTailoredTitle(a[0] as String),
+        'serverCvTemplatesTitle' => l.serverCvTemplatesTitle,
+        'serverCvTemplatesSubtitle' => l.serverCvTemplatesSubtitle,
+        'serverEducationTitle' => l.serverEducationTitle,
+        'serverEducationSubtitle' => l.serverEducationSubtitle,
+        'serverEducationTargetLabel' => l.serverEducationTargetLabel,
+        'serverEducationTabNews' => l.serverEducationTabNews,
+        'serverEducationTabCertificates' => l.serverEducationTabCertificates,
+        'serverEducationTabStudy' => l.serverEducationTabStudy,
+        'serverEducationStartLearning' => l.serverEducationStartLearning,
+        'serverJobsTitle' => l.serverJobsTitle,
+        'serverJobsSubtitle' => l.serverJobsSubtitle,
+        'serverJobsApplyBy' => l.serverJobsApplyBy(a[0] as String),
+        'serverJobsSourceGovLabel' => l.serverJobsSourceGovLabel,
+        'serverJobsSourceGovBadge' => l.serverJobsSourceGovBadge,
+        'serverJobsSourceCompanyLabel' => l.serverJobsSourceCompanyLabel,
+        'serverJobsSourceCompanyBadge' => l.serverJobsSourceCompanyBadge,
+        'serverJobsSourceTamheerLabel' => l.serverJobsSourceTamheerLabel,
+        'serverJobsSourceTamheerBadge' => l.serverJobsSourceTamheerBadge,
+        'serverJobsSourceStartupLabel' => l.serverJobsSourceStartupLabel,
+        'serverJobsSourceStartupBadge' => l.serverJobsSourceStartupBadge,
+        'serverJobsSalaryRange' => l.serverJobsSalaryRange(
+            a[0] as String, a[1] as String, a[2] as String),
+        'serverJobsSalaryFrom' =>
+          l.serverJobsSalaryFrom(a[0] as String, a[1] as String),
+        'serverJobsSalaryUpTo' =>
+          l.serverJobsSalaryUpTo(a[0] as String, a[1] as String),
+        'serverJobsCurrencySar' => l.serverJobsCurrencySar,
+        'serverNotificationsAllRead' => l.serverNotificationsAllRead,
+        'serverNotificationsPreferencesUpdated' =>
+          l.serverNotificationsPreferencesUpdated,
+        'serverNotificationsOpenRecorded' => l.serverNotificationsOpenRecorded,
+        'serverNotificationsActivityRecorded' =>
+          l.serverNotificationsActivityRecorded,
+        'serverNotificationsConversionRecorded' =>
+          l.serverNotificationsConversionRecorded,
+        'serverNotificationsTokenRegistered' =>
+          l.serverNotificationsTokenRegistered,
+        'serverNotificationsTokenRemoved' => l.serverNotificationsTokenRemoved,
+        'serverAuthInvalidCredentials' => l.serverAuthInvalidCredentials,
+        'serverAuthEmailVerified' => l.serverAuthEmailVerified,
+        'serverAuthEmailAlreadyVerified' => l.serverAuthEmailAlreadyVerified,
+        'serverAuthVerificationCodeSent' => l.serverAuthVerificationCodeSent,
+        'serverAuthResetCodeSent' => l.serverAuthResetCodeSent,
+        'serverAuthInvalidCode' => l.serverAuthInvalidCode,
+        'serverAuthPasswordReset' => l.serverAuthPasswordReset,
+        'serverAuthLoggedOut' => l.serverAuthLoggedOut,
+        'serverAuthCurrentPasswordWrong' => l.serverAuthCurrentPasswordWrong,
+        'serverAuthPasswordChanged' => l.serverAuthPasswordChanged,
+        'serverAuthAvatarSaveFailed' => l.serverAuthAvatarSaveFailed,
+        'serverAuthPasswordWrong' => l.serverAuthPasswordWrong,
+        'serverAuthSocialAccountMismatch' => l.serverAuthSocialAccountMismatch,
+        'serverAuthAccountDeleted' => l.serverAuthAccountDeleted,
+        'serverAuthJobTitleOtherRequired' => l.serverAuthJobTitleOtherRequired,
+        'serverAuthVerificationResendWait' =>
+          l.serverAuthVerificationResendWait,
+        'serverAuthResetResendWait' => l.serverAuthResetResendWait,
+        'serverAuthEmailNotVerified' => l.serverAuthEmailNotVerified,
+        'serverAuthSocialUnavailable' =>
+          l.serverAuthSocialUnavailable(a[0] as String),
+        'serverAuthSocialInvalidToken' =>
+          l.serverAuthSocialInvalidToken(a[0] as String),
+        'serverAuthSocialEmailUnverified' =>
+          l.serverAuthSocialEmailUnverified(a[0] as String),
+        'serverCvDeleted' => l.serverCvDeleted,
+        'serverCvTemplateUnavailable' => l.serverCvTemplateUnavailable,
+        'serverCvTemplatePremiumOnly' => l.serverCvTemplatePremiumOnly,
+        'serverCvEnhanceUnavailable' => l.serverCvEnhanceUnavailable,
+        'serverCvEnhanceFailed' => l.serverCvEnhanceFailed,
+        'serverCvExportGenerating' => l.serverCvExportGenerating,
+        'serverCvExportMissingContact' => l.serverCvExportMissingContact,
+        'serverCvExportUnstructuredExperience' =>
+          l.serverCvExportUnstructuredExperience,
+        'serverCvTemplateHidesSections' =>
+          l.serverCvTemplateHidesSections(a[0] as String),
+        'serverCvTemplateSectionListSeparator' =>
+          l.serverCvTemplateSectionListSeparator,
+        'serverCvSectionSummary' => l.serverCvSectionSummary,
+        'serverCvSectionSkills' => l.serverCvSectionSkills,
+        'serverCvSectionExperience' => l.serverCvSectionExperience,
+        'serverCvSectionEducation' => l.serverCvSectionEducation,
+        'serverCvSectionCertifications' => l.serverCvSectionCertifications,
+        'serverCvSectionProjects' => l.serverCvSectionProjects,
+        'serverCvSectionLanguages' => l.serverCvSectionLanguages,
+        'serverCvSectionCustom' => l.serverCvSectionCustom,
+        'serverCvFileTypeUnsupported' => l.serverCvFileTypeUnsupported,
+        'serverCvTextTooShort' => l.serverCvTextTooShort(a[0] as int),
+        'serverCvPdfUnreadable' => l.serverCvPdfUnreadable,
+        'serverAnalysisResumeRequired' => l.serverAnalysisResumeRequired,
+        'serverAnalysisLockedTitle' => l.serverAnalysisLockedTitle,
+        'serverAnalysisLockedMessage' =>
+          l.serverAnalysisLockedMessage(a[0] as int),
+        'serverAnalysisLockedCta' => l.serverAnalysisLockedCta,
+        'serverPaywallTitle' => l.serverPaywallTitle,
+        'serverPaywallCta' => l.serverPaywallCta,
+        'serverPaywallJobMatch' => l.serverPaywallJobMatch,
+        'serverPaywallDownload' => l.serverPaywallDownload,
+        'serverPaywallEnhance' => l.serverPaywallEnhance,
+        'serverPaywallDailyCvLimit' => l.serverPaywallDailyCvLimit(a[0] as int),
+        'serverPaywallDailyAnalysisLimit' =>
+          l.serverPaywallDailyAnalysisLimit(a[0] as int),
+        'serverPaywallBenefitPdf' => l.serverPaywallBenefitPdf,
+        'serverPaywallBenefitEnhance' => l.serverPaywallBenefitEnhance,
+        'serverPaywallBenefitAnalysis' => l.serverPaywallBenefitAnalysis,
+        'serverPaywallBenefitUnlimited' => l.serverPaywallBenefitUnlimited,
+        'serverJobMatchDailyLimit' => l.serverJobMatchDailyLimit,
+        'serverPlanMonthlyName' => l.serverPlanMonthlyName,
+        'serverPlanSixMonthsName' => l.serverPlanSixMonthsName,
+        'serverPlanSixMonthsBadge' => l.serverPlanSixMonthsBadge,
+        'serverPlanAnnualName' => l.serverPlanAnnualName,
+        'serverErrorUnauthenticated' => l.serverErrorUnauthenticated,
+        'serverErrorForbidden' => l.serverErrorForbidden,
+        'serverErrorNotFound' => l.serverErrorNotFound,
+        'serverErrorMethodNotAllowed' => l.serverErrorMethodNotAllowed,
+        'serverErrorTooManyRequests' => l.serverErrorTooManyRequests,
+        'serverErrorServer' => l.serverErrorServer,
+        'serverErrorUnavailable' => l.serverErrorUnavailable,
+        'serverErrorRequestFailed' => l.serverErrorRequestFailed,
+        'serverValidationRequired' =>
+          l.serverValidationRequired(a[0] as String),
+        'serverValidationString' => l.serverValidationString(a[0] as String),
+        'serverValidationEmail' => l.serverValidationEmail,
+        'serverValidationFile' => l.serverValidationFile(a[0] as String),
+        'serverValidationImage' => l.serverValidationImage(a[0] as String),
+        'serverValidationMimes' =>
+          l.serverValidationMimes(a[0] as String, a[1] as String),
+        'serverValidationMaxString' =>
+          l.serverValidationMaxString(a[0] as String, a[1] as String),
+        'serverValidationMaxFile' =>
+          l.serverValidationMaxFile(a[0] as String, a[1] as String),
+        'serverValidationMaxNumeric' =>
+          l.serverValidationMaxNumeric(a[0] as String, a[1] as String),
+        'serverValidationMaxArray' =>
+          l.serverValidationMaxArray(a[0] as String, a[1] as String),
+        'serverValidationMinString' =>
+          l.serverValidationMinString(a[0] as String, a[1] as String),
+        'serverValidationMinFile' =>
+          l.serverValidationMinFile(a[0] as String, a[1] as String),
+        'serverValidationMinNumeric' =>
+          l.serverValidationMinNumeric(a[0] as String, a[1] as String),
+        'serverValidationMinArray' =>
+          l.serverValidationMinArray(a[0] as String, a[1] as String),
+        'serverValidationBetweenNumeric' => l.serverValidationBetweenNumeric(
+            a[0] as String, a[1] as String, a[2] as String),
+        'serverValidationBetweenString' => l.serverValidationBetweenString(
+            a[0] as String, a[1] as String, a[2] as String),
+        'serverValidationSizeString' =>
+          l.serverValidationSizeString(a[0] as String, a[1] as String),
+        'serverValidationIn' => l.serverValidationIn(a[0] as String),
+        'serverValidationInteger' => l.serverValidationInteger(a[0] as String),
+        'serverValidationNumeric' => l.serverValidationNumeric(a[0] as String),
+        'serverValidationBoolean' => l.serverValidationBoolean(a[0] as String),
+        'serverValidationArray' => l.serverValidationArray(a[0] as String),
+        'serverValidationRegex' => l.serverValidationRegex(a[0] as String),
+        'serverValidationUrl' => l.serverValidationUrl(a[0] as String),
+        'serverValidationDate' => l.serverValidationDate(a[0] as String),
+        'serverValidationExists' => l.serverValidationExists(a[0] as String),
+        'serverValidationUnique' => l.serverValidationUnique(a[0] as String),
+        'serverValidationConfirmed' =>
+          l.serverValidationConfirmed(a[0] as String),
+        'serverValidationRequiredIf' =>
+          l.serverValidationRequiredIf(a[0] as String),
+        'serverValidationAccepted' =>
+          l.serverValidationAccepted(a[0] as String),
+        'serverValidationAlphaDash' =>
+          l.serverValidationAlphaDash(a[0] as String),
+        'serverValidationMoreErrors' =>
+          l.serverValidationMoreErrors(a[0] as String, a[1] as int),
+        'serverAttributeName' => l.serverAttributeName,
+        'serverAttributeFullName' => l.serverAttributeFullName,
+        'serverAttributeEmail' => l.serverAttributeEmail,
+        'serverAttributePassword' => l.serverAttributePassword,
+        'serverAttributeCurrentPassword' => l.serverAttributeCurrentPassword,
+        'serverAttributeCode' => l.serverAttributeCode,
+        'serverAttributePhone' => l.serverAttributePhone,
+        'serverAttributeLocation' => l.serverAttributeLocation,
+        'serverAttributeJobTitle' => l.serverAttributeJobTitle,
+        'serverAttributeJobTitleOther' => l.serverAttributeJobTitleOther,
+        'serverAttributeAvatar' => l.serverAttributeAvatar,
+        'serverAttributeRoleInterest' => l.serverAttributeRoleInterest,
+        'serverAttributeTargetJobTitle' => l.serverAttributeTargetJobTitle,
+        'serverAttributeNotes' => l.serverAttributeNotes,
+        'serverAttributeResumeText' => l.serverAttributeResumeText,
+        'serverAttributeResumeFile' => l.serverAttributeResumeFile,
+        'serverAttributeLinkedin' => l.serverAttributeLinkedin,
+        'serverAttributeLanguage' => l.serverAttributeLanguage,
+        'serverAttributeSummary' => l.serverAttributeSummary,
+        'serverAttributeSkills' => l.serverAttributeSkills,
+        'serverAttributeExperience' => l.serverAttributeExperience,
+        'serverAttributeEducation' => l.serverAttributeEducation,
+        'serverAttributeCertifications' => l.serverAttributeCertifications,
+        'serverAttributeJobDescription' => l.serverAttributeJobDescription,
+        'serverAttributeDraft' => l.serverAttributeDraft,
+        'serverAttributeTemplate' => l.serverAttributeTemplate,
+        'serverNotifyFirstAnalysisTitle' => l.serverNotifyFirstAnalysisTitle,
+        'serverNotifyFirstAnalysisBody' => l.serverNotifyFirstAnalysisBody,
+        'serverNotifyLowScoreTitle' => l.serverNotifyLowScoreTitle,
+        'serverNotifyLowScoreBodyScoreTip' =>
+          l.serverNotifyLowScoreBodyScoreTip(a[0] as String, a[1] as String),
+        'serverNotifyLowScoreBodyTip' =>
+          l.serverNotifyLowScoreBodyTip(a[0] as String),
+        'serverNotifyLowScoreBodyScore' =>
+          l.serverNotifyLowScoreBodyScore(a[0] as String),
+        'serverNotifyLowScoreBody' => l.serverNotifyLowScoreBody,
+        'serverNotifyAnalysisToCvTitle' => l.serverNotifyAnalysisToCvTitle,
+        'serverNotifyAnalysisToCvBody' => l.serverNotifyAnalysisToCvBody,
+        'serverNotifyStaleCvTitle' => l.serverNotifyStaleCvTitle,
+        'serverNotifyStaleCvBody' => l.serverNotifyStaleCvBody,
+        'serverNotifyMatchingJobTitle' => l.serverNotifyMatchingJobTitle,
+        'serverNotifyMatchingJobBodyTitleCompany' =>
+          l.serverNotifyMatchingJobBodyTitleCompany(
+              a[0] as String, a[1] as String),
+        'serverNotifyMatchingJobBodyTitle' =>
+          l.serverNotifyMatchingJobBodyTitle(a[0] as String),
+        'serverNotifyMatchingJobBody' => l.serverNotifyMatchingJobBody,
+        'serverNotifyEducationTitle' => l.serverNotifyEducationTitle,
+        'serverNotifyEducationBodyTitle' =>
+          l.serverNotifyEducationBodyTitle(a[0] as String),
+        'serverNotifyEducationBody' => l.serverNotifyEducationBody,
+        'serverNotifyTipTitle' => l.serverNotifyTipTitle,
+        'serverNotifyTipBody' => l.serverNotifyTipBody,
+        'serverNotifyCvReadyTitle' => l.serverNotifyCvReadyTitle,
+        'serverNotifyCvReadyBody' => l.serverNotifyCvReadyBody,
+        'serverNotifyCvFailedTitle' => l.serverNotifyCvFailedTitle,
+        'serverNotifyCvFailedBody' => l.serverNotifyCvFailedBody,
+        'serverNotifyNewJobTitle' => l.serverNotifyNewJobTitle,
+        'serverNotifyNewJobBody' => l.serverNotifyNewJobBody(a[0] as String),
+        'serverNotifyNewJobBodyCompany' =>
+          l.serverNotifyNewJobBodyCompany(a[0] as String, a[1] as String),
+        'serverNotifyNewJobBodyLocation' =>
+          l.serverNotifyNewJobBodyLocation(a[0] as String, a[1] as String),
+        'serverNotifyNewJobBodyLocationCompany' =>
+          l.serverNotifyNewJobBodyLocationCompany(
+              a[0] as String, a[1] as String, a[2] as String),
+        'serverAnalysisNotResume' => l.serverAnalysisNotResume,
+        'serverPlanFreeTitle' => l.serverPlanFreeTitle,
+        'serverPlanFreeIncludesJobs' => l.serverPlanFreeIncludesJobs,
+        'serverPlanFreeIncludesAts' => l.serverPlanFreeIncludesAts,
+        'serverPlanFreeIncludesPreview' => l.serverPlanFreeIncludesPreview,
+        'serverPlanFreeIncludesDailyLimits' =>
+          l.serverPlanFreeIncludesDailyLimits(a[0] as int, a[1] as int),
+        'serverPlanFreeExcludesRecommendations' =>
+          l.serverPlanFreeExcludesRecommendations(a[0] as int),
+        'serverCvDownloadLocked' => l.serverCvDownloadLocked,
         _ => throw ArgumentError.value(key, 'key'),
       };
 }

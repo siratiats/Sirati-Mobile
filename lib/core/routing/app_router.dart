@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:sirati/core/routing/app_routes.dart';
 import 'package:sirati/core/routing/entitlement_store.dart';
+import 'package:sirati/core/storage/guest_session.dart';
 
 /// Feature screens register themselves so `core/` never imports `features/`.
 typedef AppRouteWidgetBuilder = Widget Function(ParsedRoute parsed);
@@ -26,6 +26,10 @@ class AppRouter {
   /// the session bootstrap `pushAndRemoveUntil`.
   static String? pendingLocation;
 
+  /// Debug-only routes (the component gallery) exist in debug builds only.
+  @visibleForTesting
+  static bool debugRoutesEnabled = kDebugMode;
+
   /// Listen for warm-start OS route pushes (`sirati://app/...`).
   static void install() {
     if (_bindingInstalled) return;
@@ -41,6 +45,8 @@ class AppRouter {
 
   /// After login / splash session restore: home under the stack, then deep link.
   static void openAfterAuth(BuildContext context) {
+    // Signed in now: account-only routes open normally again.
+    GuestSession.active.value = false;
     final pending = pendingLocation;
     pendingLocation = null;
     if (pending == null ||
@@ -192,9 +198,10 @@ class AppRouter {
       case AppRoutes.jobNews:
       case AppRoutes.privacy:
       case AppRoutes.settings:
+      case AppRoutes.profile:
       case AppRoutes.notifications:
-      case AppRoutes.gallery:
       case AppRoutes.jobMatch:
+      case AppRoutes.atsScan:
       case AppRoutes.notFound:
         return ParsedRoute(name: path);
       case AppRoutes.premium:
@@ -229,6 +236,9 @@ class AppRouter {
       );
     }
 
+    if (path == AppRoutes.gallery && debugRoutesEnabled) {
+      return ParsedRoute(name: path);
+    }
     return ParsedRoute(name: path, unknown: true);
   }
 

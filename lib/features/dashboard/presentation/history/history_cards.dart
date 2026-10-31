@@ -11,20 +11,21 @@ import 'package:sirati/shared/theme/app_theme.dart';
 import 'package:sirati/shared/widgets/animated_ats_score_bar.dart';
 import 'package:sirati/shared/widgets/motion.dart';
 
-String _dateLabel(DateTime? date, {required bool english}) =>
-    date == null ? '-' : AppFormat.relativeTime(date, english: english);
+String _dateLabel(DateTime? date, AppLocalizations l10n) =>
+    date == null ? '-' : AppFormat.relativeTime(date, l10n);
 
 /// Score and grade in the band's container colours (AA in both themes).
+/// The grade comes from the score's [AtsGrade], so it always matches the band.
 class ScoreBadge extends StatelessWidget {
-  const ScoreBadge({super.key, required this.score, required this.grade});
+  const ScoreBadge({super.key, required this.score});
 
   final int score;
-  final String grade;
 
   @override
   Widget build(BuildContext context) {
     final c = context.sirati;
     final band = ScoreBand.of(score);
+    final grade = AtsGrade.of(score).label;
     final english = AppLocale.isEnglish(context);
     return Semantics(
       label: AppLocalizations.of(context).dashboardScoreBadgeSemantics(
@@ -46,12 +47,11 @@ class ScoreBadge extends StatelessWidget {
               style: AppTypography.of(context, AppTypography.titleLg,
                   color: band.onContainer(c)),
             ),
-            if (grade.trim().isNotEmpty && grade != '-')
-              Text(
-                grade,
-                style: AppTypography.of(context, AppTypography.labelLg,
-                    color: band.onContainer(c)),
-              ),
+            Text(
+              grade,
+              style: AppTypography.of(context, AppTypography.labelLg,
+                  color: band.onContainer(c)),
+            ),
           ],
         ),
       ),
@@ -163,7 +163,7 @@ class AnalysisHistoryCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              ScoreBadge(score: analysis.scoreTotal, grade: analysis.grade),
+              ScoreBadge(score: analysis.scoreTotal),
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -187,7 +187,7 @@ class AnalysisHistoryCard extends StatelessWidget {
                 ),
               ),
               Text(
-                _dateLabel(analysis.createdAt, english: english),
+                _dateLabel(analysis.createdAt, AppLocalizations.of(context)),
                 style: AppTypography.of(context, AppTypography.bodySm,
                     color: c.textSecondary),
               ),
@@ -229,7 +229,9 @@ class GeneratedCvHistoryCard extends StatelessWidget {
             child: Center(
               child: ExcludeSemantics(
                 child: Text(
-                  name.isEmpty ? 'س' : BidiText.avatarInitial(name),
+                  BidiText.avatarInitial(name,
+                      fallback:
+                          AppLocalizations.of(context).avatarFallbackInitial),
                   style: AppTypography.of(context, AppTypography.titleLg,
                       color: c.primaryInk),
                 ),
@@ -263,11 +265,14 @@ class GeneratedCvHistoryCard extends StatelessWidget {
                   runSpacing: 4,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    // Endonyms of the CV's content language, shown as-is in
-                    // every UI language (not catalog copy).
-                    _MetaChip(label: cv.language == 'ar' ? 'عربي' : 'English'),
+                    // The CV's content language, named in the UI language
+                    // (served from the label catalog).
+                    _MetaChip(
+                        label: AppLocale.isEnglishCode(cv.language)
+                            ? AppLocalizations.of(context).languageEnglish
+                            : AppLocalizations.of(context).languageArabic),
                     Text(
-                      _dateLabel(cv.createdAt, english: english),
+                      _dateLabel(cv.createdAt, AppLocalizations.of(context)),
                       style: AppTypography.of(context, AppTypography.bodySm,
                           color: c.textSecondary),
                     ),
@@ -277,7 +282,7 @@ class GeneratedCvHistoryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
-          ScoreBadge(score: cv.scoreTotal, grade: cv.grade),
+          ScoreBadge(score: cv.scoreTotal),
         ],
       ),
     );
